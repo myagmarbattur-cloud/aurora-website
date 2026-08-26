@@ -12,6 +12,7 @@ export default async function handler(req, res) {
           }
         }
       ),
+
       fetch(
         `https://discord.com/api/v10/guilds/${guildId}?with_counts=true`,
         {
@@ -33,13 +34,24 @@ export default async function handler(req, res) {
       return res.status(guildResponse.status).json(guild);
     }
 
-    res.status(200).json({
-      channels,
-      memberCount: guild.approximate_member_count ?? 0,
-      onlineCount: guild.approximate_presence_count ?? 0
-    });
+    res.setHeader("Cache-Control", "no-store");
+
+    res.setHeader(
+      "X-Member-Count",
+      String(guild.approximate_member_count ?? 0)
+    );
+
+    res.setHeader(
+      "X-Online-Count",
+      String(guild.approximate_presence_count ?? 0)
+    );
+
+    res.status(200).json(channels);
 
   } catch (error) {
+
+    console.error(error);
+
     res.status(500).json({
       error: "Failed to fetch Discord data"
     });
