@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<meta name="google-site-verification" content="OEQ8Gby0gKhWol8MHqvD6HyxLNls4kkXXks9B8JElNw" />
+
 <title>AURORA</title>
 
 <style>
@@ -395,25 +397,9 @@ async function loadDiscordData(){
         }
 
 
-        /*
-        /api/channels returns:
-        [
-            channel,
-            channel,
-            ...
-        ]
-
-        Member/online counts are sent
-        through response headers.
-        */
-
         const channels =
             await response.json();
 
-
-        /* =========================
-           MEMBER COUNT
-        ========================= */
 
         const memberCount =
             response.headers.get("X-Member-Count");
@@ -439,10 +425,6 @@ async function loadDiscordData(){
         }
 
 
-        /* =========================
-           ONLINE COUNT
-        ========================= */
-
         if(onlineCount !== null){
 
             const parsedOnline =
@@ -460,10 +442,6 @@ async function loadDiscordData(){
         }
 
 
-        /* =========================
-           CHECK CHANNEL DATA
-        ========================= */
-
         if(!Array.isArray(channels)){
 
             throw new Error(
@@ -471,10 +449,6 @@ async function loadDiscordData(){
             );
         }
 
-
-        /* =========================
-           FIND GAME CATEGORY
-        ========================= */
 
         const gameCategory =
             channels.find(function(channel){
@@ -500,10 +474,6 @@ async function loadDiscordData(){
             return;
         }
 
-
-        /* =========================
-           FIND GAME CHANNELS
-        ========================= */
 
         const gameChannels =
             channels.filter(function(channel){
@@ -540,10 +510,6 @@ async function loadDiscordData(){
             return;
         }
 
-
-        /* =========================
-           DISPLAY GAME CHANNELS
-        ========================= */
 
         gameChannels.forEach(function(channel){
 
@@ -623,3 +589,6 @@ loadDiscordData();
 
 </body>
 </html>
+
+
+
