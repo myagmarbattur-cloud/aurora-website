@@ -453,11 +453,9 @@ async function loadGameChannels(){
         inside GAME category
         */
 
-        const gameChannels =
-            channels.filter(channel =>
-
-                channel.parent_id === gameCategoryId &&
-                channel.type === 0
+        const gameChannels = channels.filter(channel =>
+    String(channel.parent_id) === gameCategoryId
+);
 
             );
 
