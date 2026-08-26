@@ -186,6 +186,7 @@ header{
 }
 
 @media(max-width:650px){
+
     .sidebar{
         width:190px;
     }
@@ -204,10 +205,13 @@ header{
 <body>
 
 <header>
+
     <div class="logo">
         AUR<span>O</span>RA
     </div>
+
 </header>
+
 
 <div class="container">
 
@@ -231,43 +235,104 @@ header{
 
     </aside>
 
+
     <main class="content">
+
+
+        <!-- SERVER INFO -->
 
         <section id="info" class="page active">
 
-            <h1>🌌 Server Info</h1>
+            <h1>
+                🌌 Server Info
+            </h1>
 
             <p class="subtitle">
                 Welcome to the Aurora community.
             </p>
 
+
             <div class="cards">
 
-                <div class="card">
-                    <div class="icon">👥</div>
-                    <h3>200+ Members</h3>
-                    <p>Aurora community is growing every day.</p>
-                </div>
+
+                <!-- MEMBER COUNT -->
 
                 <div class="card">
-                    <div class="icon">🟢</div>
-                    <h3>Active Community</h3>
-                    <p>Chat, play and hang out with other members.</p>
+
+                    <div class="icon">
+                        👥
+                    </div>
+
+                    <h3 id="memberCount">
+                        Loading...
+                    </h3>
+
+                    <p>
+                        Members in Aurora.
+                    </p>
+
                 </div>
 
-                <div class="card">
-                    <div class="icon">🎮</div>
-                    <h3>Gaming</h3>
-                    <p>A community for gamers and gaming fans.</p>
-                </div>
+
+                <!-- ONLINE COUNT -->
 
                 <div class="card">
-                    <div class="icon">⚡</div>
-                    <h3>Events</h3>
-                    <p>Community events, competitions and giveaways.</p>
+
+                    <div class="icon">
+                        🟢
+                    </div>
+
+                    <h3 id="onlineCount">
+                        Loading...
+                    </h3>
+
+                    <p>
+                        Members currently online.
+                    </p>
+
                 </div>
+
+
+                <!-- GAMING -->
+
+                <div class="card">
+
+                    <div class="icon">
+                        🎮
+                    </div>
+
+                    <h3>
+                        Gaming
+                    </h3>
+
+                    <p>
+                        A community for gamers and gaming fans.
+                    </p>
+
+                </div>
+
+
+                <!-- EVENTS -->
+
+                <div class="card">
+
+                    <div class="icon">
+                        ⚡
+                    </div>
+
+                    <h3>
+                        Events
+                    </h3>
+
+                    <p>
+                        Community events, competitions and giveaways.
+                    </p>
+
+                </div>
+
 
             </div>
+
 
             <a
                 class="join"
@@ -279,13 +344,19 @@ header{
         </section>
 
 
+
+        <!-- GAME CHAT -->
+
         <section id="game" class="page">
 
-            <h1>🎮 Game Chat</h1>
+            <h1>
+                🎮 Game Chat
+            </h1>
 
             <p class="subtitle">
                 Gaming channels inside Aurora.
             </p>
+
 
             <div id="gameChannels">
 
@@ -297,6 +368,7 @@ header{
 
         </section>
 
+
     </main>
 
 </div>
@@ -304,57 +376,158 @@ header{
 
 <script>
 
+
+/* =========================
+   PAGE SWITCH
+========================= */
+
 function showPage(pageId, element){
 
     document.querySelectorAll(".page").forEach(function(page){
+
         page.classList.remove("active");
+
     });
 
-    const selectedPage = document.getElementById(pageId);
+
+    const selectedPage =
+        document.getElementById(pageId);
+
 
     if(selectedPage){
+
         selectedPage.classList.add("active");
+
     }
+
 
     document.querySelectorAll(".menu").forEach(function(menu){
+
         menu.classList.remove("active");
+
     });
 
+
     if(element){
+
         element.classList.add("active");
+
     }
+
 }
 
 
-async function loadGameChannels(){
 
-    const container =
+/* =========================
+   LOAD DISCORD DATA
+========================= */
+
+async function loadDiscordData(){
+
+    const gameContainer =
         document.getElementById("gameChannels");
+
+    const memberElement =
+        document.getElementById("memberCount");
+
+    const onlineElement =
+        document.getElementById("onlineCount");
+
 
     try{
 
         const response =
             await fetch("/api/channels");
 
-        if(!response.ok){
-            throw new Error("API returned " + response.status);
-        }
 
-        const channels =
-            await response.json();
+        if(!response.ok){
+
+            throw new Error(
+                "API returned " + response.status
+            );
+
+        }
 
 
         /*
-        Find the GAME category dynamically.
-        Discord category channels have type 4.
+        API now returns:
+
+        {
+            channels: [...],
+            memberCount: ...,
+            onlineCount: ...
+        }
         */
+
+        const data =
+            await response.json();
+
+
+        const channels =
+            Array.isArray(data)
+                ? data
+                : (data.channels || []);
+
+
+        /* =========================
+           MEMBER COUNT
+        ========================= */
+
+        if(!Array.isArray(data)){
+
+            if(
+                typeof data.memberCount === "number"
+            ){
+
+                memberElement.textContent =
+                    data.memberCount.toLocaleString() + " Members";
+
+            }else{
+
+                memberElement.textContent =
+                    "Unavailable";
+
+            }
+
+
+            if(
+                typeof data.onlineCount === "number"
+            ){
+
+                onlineElement.textContent =
+                    data.onlineCount.toLocaleString() + " Online";
+
+            }else{
+
+                onlineElement.textContent =
+                    "Unavailable";
+
+            }
+
+        }else{
+
+            memberElement.textContent =
+                "Unavailable";
+
+            onlineElement.textContent =
+                "Unavailable";
+
+        }
+
+
+
+        /* =========================
+           FIND GAME CATEGORY
+        ========================= */
 
         const gameCategory =
             channels.find(function(channel){
 
                 return (
                     channel.type === 4 &&
-                    String(channel.name).trim().toLowerCase() === "game"
+                    String(channel.name)
+                        .trim()
+                        .toLowerCase() === "game"
                 );
 
             });
@@ -362,59 +535,76 @@ async function loadGameChannels(){
 
         if(!gameCategory){
 
-            container.innerHTML = `
+            gameContainer.innerHTML = `
                 <p class="error">
                     ⚠️ GAME category not found.
                 </p>
             `;
 
             return;
+
         }
 
 
-        /*
-        Get every channel whose parent_id
-        belongs to the GAME category.
-        */
+
+        /* =========================
+           GET GAME CHANNELS
+        ========================= */
 
         const gameChannels =
             channels.filter(function(channel){
 
-                return String(channel.parent_id) === String(gameCategory.id);
+                return (
+                    String(channel.parent_id) ===
+                    String(gameCategory.id)
+                );
 
             });
 
 
         gameChannels.sort(function(a,b){
 
-            return (a.position || 0) - (b.position || 0);
+            return (
+                (a.position || 0) -
+                (b.position || 0)
+            );
 
         });
 
 
-        container.innerHTML = "";
+        gameContainer.innerHTML = "";
 
 
         if(gameChannels.length === 0){
 
-            container.innerHTML = `
+            gameContainer.innerHTML = `
                 <p class="error">
                     ⚠️ GAME category found, but it has no channels.
                 </p>
             `;
 
             return;
+
         }
 
+
+
+        /* =========================
+           DISPLAY CHANNELS
+        ========================= */
 
         gameChannels.forEach(function(channel){
 
             const div =
                 document.createElement("div");
 
-            div.className = "channel";
+
+            div.className =
+                "channel";
+
 
             div.innerHTML = `
+
                 <h3>
                     🎮 #${escapeHTML(channel.name)}
                 </h3>
@@ -422,42 +612,78 @@ async function loadGameChannels(){
                 <p>
                     Aurora gaming channel
                 </p>
+
             `;
 
-            container.appendChild(div);
+
+            gameContainer.appendChild(div);
 
         });
+
 
     }
 
     catch(error){
 
-        console.error(error);
+        console.error(
+            "Discord API error:",
+            error
+        );
 
-        container.innerHTML = `
+
+        memberElement.textContent =
+            "Unavailable";
+
+
+        onlineElement.textContent =
+            "Unavailable";
+
+
+        gameContainer.innerHTML = `
+
             <p class="error">
                 ⚠️ Failed to load Discord channels.
             </p>
+
         `;
+
     }
+
 }
 
+
+
+/* =========================
+   ESCAPE HTML
+========================= */
 
 function escapeHTML(text){
 
     const div =
         document.createElement("div");
 
+
     div.textContent =
         String(text);
 
+
     return div.innerHTML;
+
 }
 
 
-loadGameChannels();
+
+/* =========================
+   START
+========================= */
+
+loadDiscordData();
+
 
 </script>
 
+
 </body>
 </html>
+
+
