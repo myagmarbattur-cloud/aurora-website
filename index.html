@@ -205,13 +205,10 @@ header{
 <body>
 
 <header>
-
     <div class="logo">
         AUR<span>O</span>RA
     </div>
-
 </header>
-
 
 <div class="container">
 
@@ -235,9 +232,7 @@ header{
 
     </aside>
 
-
     <main class="content">
-
 
         <!-- SERVER INFO -->
 
@@ -251,17 +246,10 @@ header{
                 Welcome to the Aurora community.
             </p>
 
-
             <div class="cards">
 
-
-                <!-- MEMBER COUNT -->
-
                 <div class="card">
-
-                    <div class="icon">
-                        👥
-                    </div>
+                    <div class="icon">👥</div>
 
                     <h3 id="memberCount">
                         Loading...
@@ -270,17 +258,10 @@ header{
                     <p>
                         Members in Aurora.
                     </p>
-
                 </div>
 
-
-                <!-- ONLINE COUNT -->
-
                 <div class="card">
-
-                    <div class="icon">
-                        🟢
-                    </div>
+                    <div class="icon">🟢</div>
 
                     <h3 id="onlineCount">
                         Loading...
@@ -289,17 +270,10 @@ header{
                     <p>
                         Members currently online.
                     </p>
-
                 </div>
 
-
-                <!-- GAMING -->
-
                 <div class="card">
-
-                    <div class="icon">
-                        🎮
-                    </div>
+                    <div class="icon">🎮</div>
 
                     <h3>
                         Gaming
@@ -308,17 +282,10 @@ header{
                     <p>
                         A community for gamers and gaming fans.
                     </p>
-
                 </div>
 
-
-                <!-- EVENTS -->
-
                 <div class="card">
-
-                    <div class="icon">
-                        ⚡
-                    </div>
+                    <div class="icon">⚡</div>
 
                     <h3>
                         Events
@@ -327,12 +294,9 @@ header{
                     <p>
                         Community events, competitions and giveaways.
                     </p>
-
                 </div>
 
-
             </div>
-
 
             <a
                 class="join"
@@ -342,7 +306,6 @@ header{
             </a>
 
         </section>
-
 
 
         <!-- GAME CHAT -->
@@ -357,7 +320,6 @@ header{
                 Gaming channels inside Aurora.
             </p>
 
-
             <div id="gameChannels">
 
                 <p class="loading">
@@ -368,14 +330,12 @@ header{
 
         </section>
 
-
     </main>
 
 </div>
 
 
 <script>
-
 
 /* =========================
    PAGE SWITCH
@@ -384,38 +344,24 @@ header{
 function showPage(pageId, element){
 
     document.querySelectorAll(".page").forEach(function(page){
-
         page.classList.remove("active");
-
     });
-
 
     const selectedPage =
         document.getElementById(pageId);
 
-
     if(selectedPage){
-
         selectedPage.classList.add("active");
-
     }
-
 
     document.querySelectorAll(".menu").forEach(function(menu){
-
         menu.classList.remove("active");
-
     });
 
-
     if(element){
-
         element.classList.add("active");
-
     }
-
 }
-
 
 
 /* =========================
@@ -433,11 +379,12 @@ async function loadDiscordData(){
     const onlineElement =
         document.getElementById("onlineCount");
 
-
     try{
 
         const response =
-            await fetch("/api/channels");
+            await fetch("/api/channels", {
+                cache: "no-store"
+            });
 
 
         if(!response.ok){
@@ -445,75 +392,84 @@ async function loadDiscordData(){
             throw new Error(
                 "API returned " + response.status
             );
-
         }
 
 
         /*
-        API now returns:
+        /api/channels returns:
+        [
+            channel,
+            channel,
+            ...
+        ]
 
-        {
-            channels: [...],
-            memberCount: ...,
-            onlineCount: ...
-        }
+        Member/online counts are sent
+        through response headers.
         */
 
-        const data =
-            await response.json();
-
-
         const channels =
-            Array.isArray(data)
-                ? data
-                : (data.channels || []);
+            await response.json();
 
 
         /* =========================
            MEMBER COUNT
         ========================= */
 
-        if(!Array.isArray(data)){
+        const memberCount =
+            response.headers.get("X-Member-Count");
 
-            if(
-                typeof data.memberCount === "number"
-            ){
-
-                memberElement.textContent =
-                    data.memberCount.toLocaleString() + " Members";
-
-            }else{
-
-                memberElement.textContent =
-                    "Unavailable";
-
-            }
+        const onlineCount =
+            response.headers.get("X-Online-Count");
 
 
-            if(
-                typeof data.onlineCount === "number"
-            ){
+        if(memberCount !== null){
 
-                onlineElement.textContent =
-                    data.onlineCount.toLocaleString() + " Online";
+            const parsedMembers =
+                Number(memberCount);
 
-            }else{
-
-                onlineElement.textContent =
-                    "Unavailable";
-
-            }
+            memberElement.textContent =
+                Number.isFinite(parsedMembers)
+                    ? parsedMembers.toLocaleString() + " Members"
+                    : "Unavailable";
 
         }else{
 
             memberElement.textContent =
                 "Unavailable";
+        }
+
+
+        /* =========================
+           ONLINE COUNT
+        ========================= */
+
+        if(onlineCount !== null){
+
+            const parsedOnline =
+                Number(onlineCount);
+
+            onlineElement.textContent =
+                Number.isFinite(parsedOnline)
+                    ? parsedOnline.toLocaleString() + " Online"
+                    : "Unavailable";
+
+        }else{
 
             onlineElement.textContent =
                 "Unavailable";
-
         }
 
+
+        /* =========================
+           CHECK CHANNEL DATA
+        ========================= */
+
+        if(!Array.isArray(channels)){
+
+            throw new Error(
+                "Discord channels response is not an array"
+            );
+        }
 
 
         /* =========================
@@ -542,13 +498,11 @@ async function loadDiscordData(){
             `;
 
             return;
-
         }
 
 
-
         /* =========================
-           GET GAME CHANNELS
+           FIND GAME CHANNELS
         ========================= */
 
         const gameChannels =
@@ -562,7 +516,7 @@ async function loadDiscordData(){
             });
 
 
-        gameChannels.sort(function(a,b){
+        gameChannels.sort(function(a, b){
 
             return (
                 (a.position || 0) -
@@ -584,13 +538,11 @@ async function loadDiscordData(){
             `;
 
             return;
-
         }
 
 
-
         /* =========================
-           DISPLAY CHANNELS
+           DISPLAY GAME CHANNELS
         ========================= */
 
         gameChannels.forEach(function(channel){
@@ -604,7 +556,6 @@ async function loadDiscordData(){
 
 
             div.innerHTML = `
-
                 <h3>
                     🎮 #${escapeHTML(channel.name)}
                 </h3>
@@ -612,7 +563,6 @@ async function loadDiscordData(){
                 <p>
                     Aurora gaming channel
                 </p>
-
             `;
 
 
@@ -620,8 +570,8 @@ async function loadDiscordData(){
 
         });
 
-
     }
+
 
     catch(error){
 
@@ -634,23 +584,17 @@ async function loadDiscordData(){
         memberElement.textContent =
             "Unavailable";
 
-
         onlineElement.textContent =
             "Unavailable";
 
 
         gameContainer.innerHTML = `
-
             <p class="error">
                 ⚠️ Failed to load Discord channels.
             </p>
-
         `;
-
     }
-
 }
-
 
 
 /* =========================
@@ -662,15 +606,11 @@ function escapeHTML(text){
     const div =
         document.createElement("div");
 
-
     div.textContent =
         String(text);
 
-
     return div.innerHTML;
-
 }
-
 
 
 /* =========================
@@ -679,11 +619,10 @@ function escapeHTML(text){
 
 loadDiscordData();
 
-
 </script>
-
 
 </body>
 </html>
+
 
 
