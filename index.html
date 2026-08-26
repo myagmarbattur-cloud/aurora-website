@@ -233,8 +233,6 @@ header{
 
     <main class="content">
 
-        <!-- SERVER INFO -->
-
         <section id="info" class="page active">
 
             <h1>🌌 Server Info</h1>
@@ -247,50 +245,26 @@ header{
 
                 <div class="card">
                     <div class="icon">👥</div>
-
-                    <h3>
-                        200+ Members
-                    </h3>
-
-                    <p>
-                        Aurora community is growing every day.
-                    </p>
+                    <h3>200+ Members</h3>
+                    <p>Aurora community is growing every day.</p>
                 </div>
 
                 <div class="card">
                     <div class="icon">🟢</div>
-
-                    <h3>
-                        Active Community
-                    </h3>
-
-                    <p>
-                        Chat, play and hang out with other members.
-                    </p>
+                    <h3>Active Community</h3>
+                    <p>Chat, play and hang out with other members.</p>
                 </div>
 
                 <div class="card">
                     <div class="icon">🎮</div>
-
-                    <h3>
-                        Gaming
-                    </h3>
-
-                    <p>
-                        A community for gamers and gaming fans.
-                    </p>
+                    <h3>Gaming</h3>
+                    <p>A community for gamers and gaming fans.</p>
                 </div>
 
                 <div class="card">
                     <div class="icon">⚡</div>
-
-                    <h3>
-                        Events
-                    </h3>
-
-                    <p>
-                        Community events, competitions and giveaways.
-                    </p>
+                    <h3>Events</h3>
+                    <p>Community events, competitions and giveaways.</p>
                 </div>
 
             </div>
@@ -305,13 +279,9 @@ header{
         </section>
 
 
-        <!-- GAME CHAT -->
-
         <section id="game" class="page">
 
-            <h1>
-                🎮 Game Chat
-            </h1>
+            <h1>🎮 Game Chat</h1>
 
             <p class="subtitle">
                 Gaming channels inside Aurora.
@@ -334,46 +304,32 @@ header{
 
 <script>
 
-/* PAGE SWITCH */
-
 function showPage(pageId, element){
 
     document.querySelectorAll(".page").forEach(function(page){
-
         page.classList.remove("active");
-
     });
 
-    const selectedPage =
-        document.getElementById(pageId);
+    const selectedPage = document.getElementById(pageId);
 
     if(selectedPage){
         selectedPage.classList.add("active");
     }
 
     document.querySelectorAll(".menu").forEach(function(menu){
-
         menu.classList.remove("active");
-
     });
 
     if(element){
         element.classList.add("active");
     }
-
 }
 
-
-/* LOAD DISCORD GAME CHANNELS */
 
 async function loadGameChannels(){
 
     const container =
         document.getElementById("gameChannels");
-
-    if(!container){
-        return;
-    }
 
     try{
 
@@ -381,34 +337,59 @@ async function loadGameChannels(){
             await fetch("/api/channels");
 
         if(!response.ok){
-
-            throw new Error(
-                "API returned " + response.status
-            );
-
+            throw new Error("API returned " + response.status);
         }
 
         const channels =
             await response.json();
 
+
         /*
-        Discord GAME category ID
+        Find the GAME category dynamically.
+        Discord category channels have type 4.
         */
 
-        const gameCategoryId =
-            "1532578537356394516";
+        const gameCategory =
+            channels.find(function(channel){
+
+                return (
+                    channel.type === 4 &&
+                    String(channel.name).trim().toLowerCase() === "game"
+                );
+
+            });
+
+
+        if(!gameCategory){
+
+            container.innerHTML = `
+                <p class="error">
+                    ⚠️ GAME category not found.
+                </p>
+            `;
+
+            return;
+        }
 
 
         /*
-        Get channels inside GAME category
+        Get every channel whose parent_id
+        belongs to the GAME category.
         */
 
         const gameChannels =
             channels.filter(function(channel){
 
-                return String(channel.parent_id) === gameCategoryId;
+                return String(channel.parent_id) === String(gameCategory.id);
 
             });
+
+
+        gameChannels.sort(function(a,b){
+
+            return (a.position || 0) - (b.position || 0);
+
+        });
 
 
         container.innerHTML = "";
@@ -418,29 +399,13 @@ async function loadGameChannels(){
 
             container.innerHTML = `
                 <p class="error">
-                    No game channels found.
+                    ⚠️ GAME category found, but it has no channels.
                 </p>
             `;
 
             return;
-
         }
 
-
-        /*
-        Sort by Discord channel position
-        */
-
-        gameChannels.sort(function(a,b){
-
-            return (a.position || 0) - (b.position || 0);
-
-        });
-
-
-        /*
-        Display channels
-        */
 
         gameChannels.forEach(function(channel){
 
@@ -467,23 +432,16 @@ async function loadGameChannels(){
 
     catch(error){
 
-        console.error(
-            "Discord channel error:",
-            error
-        );
+        console.error(error);
 
         container.innerHTML = `
             <p class="error">
                 ⚠️ Failed to load Discord channels.
             </p>
         `;
-
     }
-
 }
 
-
-/* PREVENT HTML INJECTION */
 
 function escapeHTML(text){
 
@@ -494,11 +452,8 @@ function escapeHTML(text){
         String(text);
 
     return div.innerHTML;
-
 }
 
-
-/* START */
 
 loadGameChannels();
 
