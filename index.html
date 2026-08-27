@@ -51,7 +51,7 @@ body{
     border-radius:50%;
     pointer-events:none;
     z-index:1;
-    opacity:.22;
+    opacity:.2;
     background:
         radial-gradient(
             circle,
@@ -81,8 +81,8 @@ body{
     width:2px;
     height:2px;
     border-radius:50%;
-    background:#ffffff;
-    opacity:.35;
+    background:#fff;
+    opacity:.3;
     animation:particleFloat linear infinite;
 }
 
@@ -491,6 +491,251 @@ header{
 
 
 /* =========================
+   SERVER STATS 2.0
+========================= */
+
+.stats-topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    margin-bottom:25px;
+    flex-wrap:wrap;
+}
+
+.live-status{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:8px 13px;
+    background:#ffffff08;
+    border:1px solid #ffffff10;
+    border-radius:999px;
+    color:#aaa;
+    font-size:12px;
+    font-weight:bold;
+    letter-spacing:.8px;
+}
+
+.live-dot{
+    width:8px;
+    height:8px;
+    border-radius:50%;
+    background:#22c55e;
+    box-shadow:0 0 12px #22c55e;
+    animation:livePulse 1.6s ease-in-out infinite;
+}
+
+.refresh-btn{
+    border:none;
+    cursor:pointer;
+    padding:10px 15px;
+    border-radius:10px;
+    color:#ddd;
+    background:#ffffff08;
+    border:1px solid #ffffff12;
+    transition:.25s ease;
+}
+
+.refresh-btn:hover{
+    background:#7c3aed22;
+    border-color:#8b5cf655;
+    transform:translateY(-2px);
+}
+
+.refresh-btn.spinning{
+    pointer-events:none;
+}
+
+.refresh-btn.spinning span{
+    display:inline-block;
+    animation:spin .7s linear infinite;
+}
+
+.stats-grid{
+    display:grid;
+    grid-template-columns:repeat(3,minmax(180px,1fr));
+    gap:18px;
+    perspective:1200px;
+}
+
+.stat-card{
+    position:relative;
+    min-height:210px;
+    padding:24px;
+    background:
+        linear-gradient(
+            145deg,
+            #15151f,
+            #0e0e14
+        );
+    border:1px solid #ffffff10;
+    border-radius:20px;
+    overflow:hidden;
+    transform-style:preserve-3d;
+    will-change:transform;
+    transition:
+        border-color .2s ease,
+        box-shadow .2s ease;
+}
+
+.stat-card::before{
+    content:"";
+    position:absolute;
+    width:180px;
+    height:180px;
+    top:-90px;
+    right:-80px;
+    border-radius:50%;
+    background:#7c3aed33;
+    filter:blur(55px);
+    transition:.3s ease;
+    pointer-events:none;
+}
+
+.stat-card::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:
+        linear-gradient(
+            120deg,
+            transparent 25%,
+            #ffffff10 50%,
+            transparent 75%
+        );
+    transform:translateX(-120%);
+    transition:.6s ease;
+    pointer-events:none;
+}
+
+.stat-card:hover::after{
+    transform:translateX(120%);
+}
+
+.stat-card:hover{
+    border-color:#8b5cf666;
+    box-shadow:
+        0 25px 50px #00000055,
+        0 0 30px #7c3aed12;
+}
+
+.stat-card:hover::before{
+    transform:scale(1.25);
+}
+
+.stat-icon{
+    position:relative;
+    z-index:2;
+    width:54px;
+    height:54px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:16px;
+    background:#ffffff08;
+    border:1px solid #ffffff10;
+    font-size:25px;
+    margin-bottom:22px;
+    transform:translateZ(28px);
+}
+
+.stat-label{
+    position:relative;
+    z-index:2;
+    color:#777;
+    font-size:13px;
+    margin-bottom:7px;
+    transform:translateZ(20px);
+}
+
+.stat-number{
+    position:relative;
+    z-index:2;
+    font-size:35px;
+    font-weight:900;
+    letter-spacing:.5px;
+    transform:translateZ(25px);
+}
+
+.stat-sub{
+    position:relative;
+    z-index:2;
+    margin-top:8px;
+    color:#666;
+    font-size:12px;
+    transform:translateZ(18px);
+}
+
+.online-card .stat-icon{
+    background:#22c55e12;
+}
+
+.channels-card .stat-icon{
+    background:#06b6d412;
+}
+
+.member-card .stat-icon{
+    background:#7c3aed18;
+}
+
+
+/* =========================
+   ONLINE METER
+========================= */
+
+.online-meter{
+    margin-top:22px;
+    padding:22px;
+    background:#ffffff08;
+    border:1px solid #ffffff10;
+    border-radius:18px;
+}
+
+.meter-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    color:#aaa;
+    font-size:13px;
+    margin-bottom:12px;
+}
+
+.meter-top strong{
+    color:white;
+}
+
+.meter-track{
+    width:100%;
+    height:10px;
+    background:#ffffff0a;
+    border-radius:999px;
+    overflow:hidden;
+}
+
+.meter-fill{
+    height:100%;
+    width:0%;
+    border-radius:999px;
+    background:linear-gradient(
+        90deg,
+        #7c3aed,
+        #06b6d4
+    );
+    box-shadow:
+        0 0 20px #7c3aed55;
+    transition:width .9s cubic-bezier(.22,1,.36,1);
+}
+
+.stats-note{
+    margin-top:15px;
+    color:#555;
+    font-size:12px;
+}
+
+
+/* =========================
    CARDS
 ========================= */
 
@@ -812,7 +1057,6 @@ header{
 }
 
 @keyframes auroraMove{
-
     0%,100%{
         transform:translateX(-5%) rotate(-8deg);
     }
@@ -823,7 +1067,6 @@ header{
 }
 
 @keyframes floatGlow{
-
     0%,100%{
         transform:translate(0,0) scale(1);
     }
@@ -834,7 +1077,6 @@ header{
 }
 
 @keyframes floatGlow2{
-
     0%,100%{
         transform:translate(0,0) scale(1);
     }
@@ -845,7 +1087,6 @@ header{
 }
 
 @keyframes titlePulse{
-
     0%,100%{
         filter:brightness(1);
     }
@@ -856,7 +1097,6 @@ header{
 }
 
 @keyframes particleFloat{
-
     from{
         transform:translateY(105vh);
     }
@@ -866,10 +1106,35 @@ header{
     }
 }
 
+@keyframes livePulse{
+    0%,100%{
+        transform:scale(1);
+        opacity:1;
+    }
+
+    50%{
+        transform:scale(1.5);
+        opacity:.5;
+    }
+}
+
+@keyframes spin{
+    to{
+        transform:rotate(360deg);
+    }
+}
+
 
 /* =========================
    MOBILE
 ========================= */
+
+@media(max-width:850px){
+
+    .stats-grid{
+        grid-template-columns:1fr;
+    }
+}
 
 @media(max-width:650px){
 
@@ -928,6 +1193,14 @@ header{
     .rule-line{
         font-size:13px;
         line-height:1.7;
+    }
+
+    .stats-topbar{
+        align-items:flex-start;
+    }
+
+    .stat-card{
+        min-height:190px;
     }
 }
 
@@ -1008,7 +1281,9 @@ header{
     <main class="content">
 
 
-        <!-- HOME -->
+        <!-- =========================
+             HOME
+        ========================= -->
 
         <section id="home" class="page active home">
 
@@ -1096,85 +1371,164 @@ header{
 
 
 
-        <!-- SERVER INFO -->
+        <!-- =========================
+             SERVER INFO
+        ========================= -->
 
         <section id="info" class="page">
 
-            <h1>
-                🌌 Server Info
-            </h1>
+            <div class="stats-topbar">
 
-            <p class="subtitle">
-                Welcome to the Aurora community.
-            </p>
+                <div>
+                    <h1>
+                        🌌 Server Stats
+                    </h1>
 
-            <div class="cards">
+                    <p class="subtitle">
+                        Live Aurora server information.
+                    </p>
+                </div>
 
-                <div class="card">
 
-                    <div class="icon">
+                <div style="display:flex;gap:10px;align-items:center;">
+
+                    <div class="live-status">
+                        <span class="live-dot"></span>
+                        LIVE
+                    </div>
+
+
+                    <button
+                        class="refresh-btn"
+                        id="refreshStats"
+                        type="button"
+                        onclick="loadDiscordData(true)">
+                        <span>↻</span>
+                        Refresh
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div class="stats-grid">
+
+
+                <!-- MEMBERS -->
+
+                <div
+                    class="stat-card member-card"
+                    data-tilt>
+
+                    <div class="stat-icon">
                         👥
                     </div>
 
-                    <h3 id="memberCount">
-                        Loading...
-                    </h3>
+                    <div class="stat-label">
+                        COMMUNITY MEMBERS
+                    </div>
 
-                    <p>
-                        Members in Aurora.
-                    </p>
+                    <div
+                        class="stat-number"
+                        id="memberCount">
+                        —
+                    </div>
+
+                    <div class="stat-sub">
+                        Total members in Aurora
+                    </div>
 
                 </div>
 
 
-                <div class="card">
 
-                    <div class="icon">
+                <!-- ONLINE -->
+
+                <div
+                    class="stat-card online-card"
+                    data-tilt>
+
+                    <div class="stat-icon">
                         🟢
                     </div>
 
-                    <h3 id="onlineCount">
-                        Loading...
-                    </h3>
+                    <div class="stat-label">
+                        CURRENTLY ONLINE
+                    </div>
 
-                    <p>
-                        Members currently online.
-                    </p>
+                    <div
+                        class="stat-number"
+                        id="onlineCount">
+                        —
+                    </div>
+
+                    <div class="stat-sub">
+                        Members currently online
+                    </div>
 
                 </div>
 
 
-                <div class="card">
 
-                    <div class="icon">
-                        🎮
+                <!-- CHANNELS -->
+
+                <div
+                    class="stat-card channels-card"
+                    data-tilt>
+
+                    <div class="stat-icon">
+                        💬
                     </div>
 
-                    <h3>
-                        Gaming
-                    </h3>
+                    <div class="stat-label">
+                        TOTAL CHANNELS
+                    </div>
 
-                    <p>
-                        A community for gamers and gaming fans.
-                    </p>
+                    <div
+                        class="stat-number"
+                        id="channelCount">
+                        —
+                    </div>
+
+                    <div class="stat-sub">
+                        Discord channels
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ONLINE METER -->
+
+            <div class="online-meter">
+
+                <div class="meter-top">
+
+                    <span>
+                        🟢 Online activity
+                    </span>
+
+                    <strong id="onlinePercent">
+                        0%
+                    </strong>
 
                 </div>
 
 
-                <div class="card">
+                <div class="meter-track">
 
-                    <div class="icon">
-                        ⚡
+                    <div
+                        class="meter-fill"
+                        id="onlineMeter">
                     </div>
 
-                    <h3>
-                        Events
-                    </h3>
+                </div>
 
-                    <p>
-                        Community events, competitions and giveaways.
-                    </p>
 
+                <div class="stats-note" id="statsUpdated">
+                    Waiting for Discord data...
                 </div>
 
             </div>
@@ -1192,7 +1546,9 @@ header{
 
 
 
-        <!-- GAME CHAT -->
+        <!-- =========================
+             GAME CHAT
+        ========================= -->
 
         <section id="game" class="page">
 
@@ -1216,7 +1572,9 @@ header{
 
 
 
-        <!-- STAFF TEAM -->
+        <!-- =========================
+             STAFF TEAM
+        ========================= -->
 
         <section id="staff" class="page">
 
@@ -1229,6 +1587,8 @@ header{
             </p>
 
 
+            <!-- OWNER -->
+
             <div class="staff-section">
 
                 <div class="staff-role">
@@ -1238,36 +1598,16 @@ header{
                 <div class="staff-grid">
 
                     <div class="staff-card role-owner">
-
-                        <div class="staff-avatar">
-                            👑
-                        </div>
-
-                        <div class="staff-name">
-                            Danger
-                        </div>
-
-                        <div class="staff-desc">
-                            Aurora Owner
-                        </div>
-
+                        <div class="staff-avatar">👑</div>
+                        <div class="staff-name">Danger</div>
+                        <div class="staff-desc">Aurora Owner</div>
                     </div>
 
 
                     <div class="staff-card role-owner">
-
-                        <div class="staff-avatar">
-                            👑
-                        </div>
-
-                        <div class="staff-name">
-                            Ligro
-                        </div>
-
-                        <div class="staff-desc">
-                            Aurora Owner
-                        </div>
-
+                        <div class="staff-avatar">👑</div>
+                        <div class="staff-name">Ligro</div>
+                        <div class="staff-desc">Aurora Owner</div>
                     </div>
 
                 </div>
@@ -1275,6 +1615,8 @@ header{
             </div>
 
 
+
+            <!-- DEVELOPER -->
 
             <div class="staff-section">
 
@@ -1285,19 +1627,9 @@ header{
                 <div class="staff-grid">
 
                     <div class="staff-card role-developer">
-
-                        <div class="staff-avatar">
-                            💻
-                        </div>
-
-                        <div class="staff-name">
-                            Moka
-                        </div>
-
-                        <div class="staff-desc">
-                            Aurora Developer
-                        </div>
-
+                        <div class="staff-avatar">💻</div>
+                        <div class="staff-name">Moka</div>
+                        <div class="staff-desc">Aurora Developer</div>
                     </div>
 
                 </div>
@@ -1305,6 +1637,8 @@ header{
             </div>
 
 
+
+            <!-- ADMIN -->
 
             <div class="staff-section">
 
@@ -1315,53 +1649,23 @@ header{
                 <div class="staff-grid">
 
                     <div class="staff-card role-admin">
-
-                        <div class="staff-avatar">
-                            🛡️
-                        </div>
-
-                        <div class="staff-name">
-                            Miraa
-                        </div>
-
-                        <div class="staff-desc">
-                            Aurora Administrator
-                        </div>
-
+                        <div class="staff-avatar">🛡️</div>
+                        <div class="staff-name">Miraa</div>
+                        <div class="staff-desc">Aurora Administrator</div>
                     </div>
 
 
                     <div class="staff-card role-admin">
-
-                        <div class="staff-avatar">
-                            🛡️
-                        </div>
-
-                        <div class="staff-name">
-                            Enhush
-                        </div>
-
-                        <div class="staff-desc">
-                            Aurora Administrator
-                        </div>
-
+                        <div class="staff-avatar">🛡️</div>
+                        <div class="staff-name">Enhush</div>
+                        <div class="staff-desc">Aurora Administrator</div>
                     </div>
 
 
                     <div class="staff-card role-admin">
-
-                        <div class="staff-avatar">
-                            🛡️
-                        </div>
-
-                        <div class="staff-name">
-                            Zaya
-                        </div>
-
-                        <div class="staff-desc">
-                            Aurora Administrator
-                        </div>
-
+                        <div class="staff-avatar">🛡️</div>
+                        <div class="staff-name">Zaya</div>
+                        <div class="staff-desc">Aurora Administrator</div>
                     </div>
 
                 </div>
@@ -1369,6 +1673,8 @@ header{
             </div>
 
 
+
+            <!-- STAFF -->
 
             <div class="staff-section">
 
@@ -1379,19 +1685,9 @@ header{
                 <div class="staff-grid">
 
                     <div class="staff-card role-staff">
-
-                        <div class="staff-avatar">
-                            ✦
-                        </div>
-
-                        <div class="staff-name">
-                            Zane
-                        </div>
-
-                        <div class="staff-desc">
-                            Aurora Staff
-                        </div>
-
+                        <div class="staff-avatar">✦</div>
+                        <div class="staff-name">Zane</div>
+                        <div class="staff-desc">Aurora Staff</div>
                     </div>
 
                 </div>
@@ -1399,6 +1695,8 @@ header{
             </div>
 
 
+
+            <!-- MODERATOR -->
 
             <div class="staff-section">
 
@@ -1409,19 +1707,9 @@ header{
                 <div class="staff-grid">
 
                     <div class="staff-card role-moderator">
-
-                        <div class="staff-avatar">
-                            🔨
-                        </div>
-
-                        <div class="staff-name">
-                            Callopie
-                        </div>
-
-                        <div class="staff-desc">
-                            Aurora Moderator
-                        </div>
-
+                        <div class="staff-avatar">🔨</div>
+                        <div class="staff-name">Callopie</div>
+                        <div class="staff-desc">Aurora Moderator</div>
                     </div>
 
                 </div>
@@ -1432,7 +1720,9 @@ header{
 
 
 
-        <!-- RULES -->
+        <!-- =========================
+             RULES
+        ========================= -->
 
         <section id="rules" class="page">
 
@@ -1612,6 +1902,7 @@ for(let i = 0; i < 35; i++){
         (0.12 + Math.random() * 0.35).toString();
 
     particles.appendChild(particle);
+
 }
 
 
@@ -1674,29 +1965,226 @@ function openGamePage(){
 
 
 /* =========================
+   NUMBER ANIMATION
+========================= */
+
+function animateNumber(element, target){
+
+    const start =
+        Number(element.dataset.value || 0);
+
+    const end =
+        Number(target);
+
+    const duration =
+        900;
+
+    const startTime =
+        performance.now();
+
+
+    function update(currentTime){
+
+        const elapsed =
+            currentTime - startTime;
+
+        const progress =
+            Math.min(
+                elapsed / duration,
+                1
+            );
+
+        const eased =
+            1 - Math.pow(
+                1 - progress,
+                3
+            );
+
+        const value =
+            Math.round(
+                start +
+                (end - start) * eased
+            );
+
+        element.textContent =
+            value.toLocaleString();
+
+        if(progress < 1){
+
+            requestAnimationFrame(update);
+
+        }else{
+
+            element.dataset.value =
+                String(end);
+
+        }
+
+    }
+
+
+    requestAnimationFrame(update);
+
+}
+
+
+/* =========================
+   UPDATE STATS
+========================= */
+
+function updateServerStats(
+    members,
+    online,
+    channels
+){
+
+    const memberElement =
+        document.getElementById(
+            "memberCount"
+        );
+
+    const onlineElement =
+        document.getElementById(
+            "onlineCount"
+        );
+
+    const channelElement =
+        document.getElementById(
+            "channelCount"
+        );
+
+    const homeMemberElement =
+        document.getElementById(
+            "homeMemberCount"
+        );
+
+    const homeOnlineElement =
+        document.getElementById(
+            "homeOnlineCount"
+        );
+
+    const percentElement =
+        document.getElementById(
+            "onlinePercent"
+        );
+
+    const meterElement =
+        document.getElementById(
+            "onlineMeter"
+        );
+
+    const updatedElement =
+        document.getElementById(
+            "statsUpdated"
+        );
+
+
+    animateNumber(
+        memberElement,
+        members
+    );
+
+
+    animateNumber(
+        onlineElement,
+        online
+    );
+
+
+    animateNumber(
+        channelElement,
+        channels
+    );
+
+
+    homeMemberElement.textContent =
+        members.toLocaleString();
+
+
+    homeOnlineElement.textContent =
+        online.toLocaleString();
+
+
+    let percentage = 0;
+
+    if(members > 0){
+
+        percentage =
+            (online / members) * 100;
+
+    }
+
+
+    percentage =
+        Math.max(
+            0,
+            Math.min(
+                percentage,
+                100
+            )
+        );
+
+
+    percentElement.textContent =
+        percentage.toFixed(1) + "%";
+
+
+    meterElement.style.width =
+        percentage + "%";
+
+
+    const now =
+        new Date();
+
+
+    updatedElement.textContent =
+        "Last updated • " +
+        now.toLocaleTimeString(
+            [],
+            {
+                hour:"2-digit",
+                minute:"2-digit",
+                second:"2-digit"
+            }
+        );
+
+}
+
+
+/* =========================
    LOAD DISCORD DATA
 ========================= */
 
-async function loadDiscordData(){
+async function loadDiscordData(isRefresh = false){
 
     const gameContainer =
-        document.getElementById("gameChannels");
-
+        document.getElementById(
+            "gameChannels"
+        );
 
     const memberElement =
-        document.getElementById("memberCount");
-
+        document.getElementById(
+            "memberCount"
+        );
 
     const onlineElement =
-        document.getElementById("onlineCount");
+        document.getElementById(
+            "onlineCount"
+        );
+
+    const refreshButton =
+        document.getElementById(
+            "refreshStats"
+        );
 
 
-    const homeMemberElement =
-        document.getElementById("homeMemberCount");
+    if(isRefresh && refreshButton){
 
+        refreshButton.classList.add(
+            "spinning"
+        );
 
-    const homeOnlineElement =
-        document.getElementById("homeOnlineCount");
+    }
 
 
     try{
@@ -1724,9 +2212,14 @@ async function loadDiscordData(){
             await response.json();
 
 
-        /* =========================
-           MEMBER COUNT
-        ========================= */
+        if(!Array.isArray(channels)){
+
+            throw new Error(
+                "Discord channels response is not an array"
+            );
+
+        }
+
 
         const memberHeader =
             response.headers.get(
@@ -1740,79 +2233,35 @@ async function loadDiscordData(){
             );
 
 
-        const parsedMembers =
+        const members =
             Number(memberHeader);
 
 
-        const parsedOnline =
+        const online =
             Number(onlineHeader);
 
 
-        if(Number.isFinite(parsedMembers)){
-
-            const memberText =
-                parsedMembers.toLocaleString();
+        const channelTotal =
+            channels.length;
 
 
-            memberElement.textContent =
-                memberText + " Members";
-
-
-            homeMemberElement.textContent =
-                memberText;
-
-        }else{
-
-            memberElement.textContent =
-                "Unavailable";
-
-
-            homeMemberElement.textContent =
-                "Unavailable";
-
-        }
-
-
-        /* =========================
-           ONLINE COUNT
-        ========================= */
-
-        if(Number.isFinite(parsedOnline)){
-
-            const onlineText =
-                parsedOnline.toLocaleString();
-
-
-            onlineElement.textContent =
-                onlineText + " Online";
-
-
-            homeOnlineElement.textContent =
-                onlineText;
-
-        }else{
-
-            onlineElement.textContent =
-                "Unavailable";
-
-
-            homeOnlineElement.textContent =
-                "Unavailable";
-
-        }
-
-
-        /* =========================
-           CHANNEL DATA
-        ========================= */
-
-        if(!Array.isArray(channels)){
+        if(
+            !Number.isFinite(members) ||
+            !Number.isFinite(online)
+        ){
 
             throw new Error(
-                "Discord channels response is not an array"
+                "Missing Discord server counts"
             );
 
         }
+
+
+        updateServerStats(
+            members,
+            online,
+            channelTotal
+        );
 
 
         /* =========================
@@ -1823,13 +2272,10 @@ async function loadDiscordData(){
             channels.find(function(channel){
 
                 return (
-
                     channel.type === 4 &&
-
                     String(channel.name)
                         .trim()
                         .toLowerCase() === "game"
-
                 );
 
             });
@@ -1856,10 +2302,8 @@ async function loadDiscordData(){
             channels.filter(function(channel){
 
                 return (
-
                     String(channel.parent_id) ===
                     String(gameCategory.id)
-
                 );
 
             });
@@ -1868,10 +2312,8 @@ async function loadDiscordData(){
         gameChannels.sort(function(a,b){
 
             return (
-
                 (a.position || 0) -
                 (b.position || 0)
-
             );
 
         });
@@ -1894,14 +2336,12 @@ async function loadDiscordData(){
         }
 
 
-        /* =========================
-           DISPLAY GAME CHANNELS
-        ========================= */
-
         gameChannels.forEach(function(channel){
 
             const div =
-                document.createElement("div");
+                document.createElement(
+                    "div"
+                );
 
 
             div.className =
@@ -1942,12 +2382,40 @@ async function loadDiscordData(){
             "Unavailable";
 
 
-        homeMemberElement.textContent =
+        document.getElementById(
+            "channelCount"
+        ).textContent =
             "Unavailable";
 
 
-        homeOnlineElement.textContent =
+        document.getElementById(
+            "homeMemberCount"
+        ).textContent =
             "Unavailable";
+
+
+        document.getElementById(
+            "homeOnlineCount"
+        ).textContent =
+            "Unavailable";
+
+
+        document.getElementById(
+            "onlinePercent"
+        ).textContent =
+            "0%";
+
+
+        document.getElementById(
+            "onlineMeter"
+        ).style.width =
+            "0%";
+
+
+        document.getElementById(
+            "statsUpdated"
+        ).textContent =
+            "Unable to load Discord data";
 
 
         gameContainer.innerHTML = `
@@ -1958,7 +2426,100 @@ async function loadDiscordData(){
 
     }
 
+
+    finally{
+
+        if(isRefresh && refreshButton){
+
+            setTimeout(function(){
+
+                refreshButton.classList.remove(
+                    "spinning"
+                );
+
+            }, 450);
+
+        }
+
+    }
+
 }
+
+
+/* =========================
+   3D CARD TILT
+========================= */
+
+document.querySelectorAll(
+    "[data-tilt]"
+).forEach(function(card){
+
+    card.addEventListener(
+        "mousemove",
+        function(event){
+
+            if(window.innerWidth <= 650){
+                return;
+            }
+
+
+            const rect =
+                card.getBoundingClientRect();
+
+
+            const x =
+                event.clientX -
+                rect.left;
+
+
+            const y =
+                event.clientY -
+                rect.top;
+
+
+            const centerX =
+                rect.width / 2;
+
+
+            const centerY =
+                rect.height / 2;
+
+
+            const rotateX =
+                ((y - centerY) /
+                centerY) * -5;
+
+
+            const rotateY =
+                ((x - centerX) /
+                centerX) * 5;
+
+
+            card.style.transform =
+                "perspective(900px) " +
+                "rotateX(" +
+                rotateX +
+                "deg) " +
+                "rotateY(" +
+                rotateY +
+                "deg) " +
+                "translateY(-5px)";
+
+        }
+    );
+
+
+    card.addEventListener(
+        "mouseleave",
+        function(){
+
+            card.style.transform =
+                "";
+
+        }
+    );
+
+});
 
 
 /* =========================
@@ -1968,7 +2529,9 @@ async function loadDiscordData(){
 function escapeHTML(text){
 
     const div =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
 
 
     div.textContent =
@@ -1989,7 +2552,4 @@ loadDiscordData();
 </script>
 
 </body>
-</html>
-
-
-
+                    </html>
