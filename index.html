@@ -9,6 +9,7 @@
 <title>AURORA — Gaming Community</title>
 
 <style>
+
 *{
     box-sizing:border-box;
     margin:0;
@@ -370,6 +371,132 @@ header{
 
 
 /* =========================
+   STAFF
+========================= */
+
+.staff-intro{
+    color:#777;
+    margin-bottom:30px;
+}
+
+.staff-section{
+    margin-bottom:35px;
+}
+
+.staff-role{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:15px;
+    font-size:13px;
+    font-weight:900;
+    letter-spacing:2px;
+    color:#aaa;
+}
+
+.staff-role::after{
+    content:"";
+    flex:1;
+    height:1px;
+    background:#ffffff10;
+}
+
+.staff-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+    gap:15px;
+}
+
+.staff-card{
+    position:relative;
+    padding:22px;
+    background:
+        linear-gradient(
+            145deg,
+            #15151f,
+            #0e0e14
+        );
+    border:1px solid #ffffff10;
+    border-radius:18px;
+    overflow:hidden;
+    transition:.25s;
+}
+
+.staff-card::before{
+    content:"";
+    position:absolute;
+    top:-60px;
+    right:-60px;
+    width:130px;
+    height:130px;
+    border-radius:50%;
+    background:#7c3aed44;
+    filter:blur(45px);
+    transition:.25s;
+}
+
+.staff-card:hover{
+    transform:translateY(-5px);
+    border-color:#8b5cf666;
+    box-shadow:0 15px 40px #00000055;
+}
+
+.staff-card:hover::before{
+    transform:scale(1.3);
+}
+
+.staff-avatar{
+    width:52px;
+    height:52px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:15px;
+    background:#ffffff08;
+    border:1px solid #ffffff12;
+    font-size:24px;
+    margin-bottom:16px;
+    position:relative;
+    z-index:1;
+}
+
+.staff-name{
+    font-size:18px;
+    font-weight:800;
+    margin-bottom:7px;
+    position:relative;
+    z-index:1;
+}
+
+.staff-desc{
+    color:#777;
+    font-size:13px;
+    position:relative;
+    z-index:1;
+}
+
+.role-owner .staff-avatar{
+    background:#7c3aed22;
+}
+
+.role-developer .staff-avatar{
+    background:#06b6d422;
+}
+
+.role-admin .staff-avatar{
+    background:#ef444422;
+}
+
+.role-staff .staff-avatar{
+    background:#8b5cf622;
+}
+
+.role-moderator .staff-avatar{
+    background:#22c55e22;
+}
+
+
+/* =========================
    CHANNELS
 ========================= */
 
@@ -510,6 +637,10 @@ header{
     .home-btn{
         width:100%;
     }
+
+    .staff-grid{
+        grid-template-columns:1fr;
+    }
 }
 
 </style>
@@ -562,23 +693,33 @@ header{
             🎮 Game Chat
         </div>
 
+
+        <div
+            class="menu"
+            data-page="staff"
+            onclick="showPage('staff', this)">
+            👑 Staff Team
+        </div>
+
     </aside>
 
 
 
-    <!-- CONTENT -->
-
     <main class="content">
 
 
-        <!-- HOME -->
+        <!-- =========================
+             HOME
+        ========================= -->
 
         <section id="home" class="page active home">
 
             <div class="aurora">
+
                 <div class="aurora-line one"></div>
                 <div class="aurora-line two"></div>
                 <div class="aurora-line three"></div>
+
             </div>
 
 
@@ -657,7 +798,9 @@ header{
 
 
 
-        <!-- SERVER INFO -->
+        <!-- =========================
+             SERVER INFO
+        ========================= -->
 
         <section id="info" class="page">
 
@@ -665,13 +808,12 @@ header{
                 🌌 Server Info
             </h1>
 
-
             <p class="subtitle">
                 Welcome to the Aurora community.
             </p>
 
-
             <div class="cards">
+
 
                 <div class="card">
 
@@ -740,6 +882,7 @@ header{
 
                 </div>
 
+
             </div>
 
 
@@ -755,7 +898,9 @@ header{
 
 
 
-        <!-- GAME CHAT -->
+        <!-- =========================
+             GAME CHAT
+        ========================= -->
 
         <section id="game" class="page">
 
@@ -763,11 +908,9 @@ header{
                 🎮 Game Chat
             </h1>
 
-
             <p class="subtitle">
                 Gaming channels inside Aurora.
             </p>
-
 
             <div id="gameChannels">
 
@@ -780,10 +923,237 @@ header{
         </section>
 
 
+
+        <!-- =========================
+             STAFF TEAM
+        ========================= -->
+
+        <section id="staff" class="page">
+
+            <h1>
+                👑 Staff Team
+            </h1>
+
+            <p class="staff-intro">
+                Meet the people helping Aurora grow.
+            </p>
+
+
+            <!-- OWNER -->
+
+            <div class="staff-section">
+
+                <div class="staff-role">
+                    👑 OWNER
+                </div>
+
+                <div class="staff-grid">
+
+                    <div class="staff-card role-owner">
+
+                        <div class="staff-avatar">
+                            👑
+                        </div>
+
+                        <div class="staff-name">
+                            Danger
+                        </div>
+
+                        <div class="staff-desc">
+                            Aurora Owner
+                        </div>
+
+                    </div>
+
+
+                    <div class="staff-card role-owner">
+
+                        <div class="staff-avatar">
+                            👑
+                        </div>
+
+                        <div class="staff-name">
+                            Ligro
+                        </div>
+
+                        <div class="staff-desc">
+                            Aurora Owner
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- DEVELOPER -->
+
+            <div class="staff-section">
+
+                <div class="staff-role">
+                    💻 DEVELOPER
+                </div>
+
+                <div class="staff-grid">
+
+                    <div class="staff-card role-developer">
+
+                        <div class="staff-avatar">
+                            💻
+                        </div>
+
+                        <div class="staff-name">
+                            Moka
+                        </div>
+
+                        <div class="staff-desc">
+                            Aurora Developer
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ADMIN -->
+
+            <div class="staff-section">
+
+                <div class="staff-role">
+                    🛡️ ADMIN
+                </div>
+
+                <div class="staff-grid">
+
+                    <div class="staff-card role-admin">
+
+                        <div class="staff-avatar">
+                            🛡️
+                        </div>
+
+                        <div class="staff-name">
+                            Miraa
+                        </div>
+
+                        <div class="staff-desc">
+                            Aurora Administrator
+                        </div>
+
+                    </div>
+
+
+                    <div class="staff-card role-admin">
+
+                        <div class="staff-avatar">
+                            🛡️
+                        </div>
+
+                        <div class="staff-name">
+                            Enhush
+                        </div>
+
+                        <div class="staff-desc">
+                            Aurora Administrator
+                        </div>
+
+                    </div>
+
+
+                    <div class="staff-card role-admin">
+
+                        <div class="staff-avatar">
+                            🛡️
+                        </div>
+
+                        <div class="staff-name">
+                            Zaya
+                        </div>
+
+                        <div class="staff-desc">
+                            Aurora Administrator
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- STAFF -->
+
+            <div class="staff-section">
+
+                <div class="staff-role">
+                    ✦ STAFF
+                </div>
+
+                <div class="staff-grid">
+
+                    <div class="staff-card role-staff">
+
+                        <div class="staff-avatar">
+                            ✦
+                        </div>
+
+                        <div class="staff-name">
+                            Zane
+                        </div>
+
+                        <div class="staff-desc">
+                            Aurora Staff
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- MODERATOR -->
+
+            <div class="staff-section">
+
+                <div class="staff-role">
+                    🔨 MODERATOR
+                </div>
+
+                <div class="staff-grid">
+
+                    <div class="staff-card role-moderator">
+
+                        <div class="staff-avatar">
+                            🔨
+                        </div>
+
+                        <div class="staff-name">
+                            Callopie
+                        </div>
+
+                        <div class="staff-desc">
+                            Aurora Moderator
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
     </main>
 
 </div>
-
 
 
 <script>
@@ -921,6 +1291,10 @@ async function loadDiscordData(){
         }
 
 
+        /* =========================
+           ONLINE COUNT
+        ========================= */
+
         if(Number.isFinite(parsedOnline)){
 
             const onlineText =
@@ -947,7 +1321,7 @@ async function loadDiscordData(){
 
 
         /* =========================
-           CHECK CHANNELS
+           CHANNEL DATA CHECK
         ========================= */
 
         if(!Array.isArray(channels)){
@@ -967,13 +1341,10 @@ async function loadDiscordData(){
             channels.find(function(channel){
 
                 return (
-
                     channel.type === 4 &&
-
                     String(channel.name)
                         .trim()
                         .toLowerCase() === "game"
-
                 );
 
             });
