@@ -497,6 +497,66 @@ header{
 
 
 /* =========================
+   RULES
+========================= */
+
+.rules-intro{
+    color:#777;
+    margin-bottom:30px;
+}
+
+.rules-container{
+    max-width:950px;
+}
+
+.rule-section{
+    margin-bottom:18px;
+    padding:24px;
+    background:
+        linear-gradient(
+            145deg,
+            #15151f,
+            #0e0e14
+        );
+    border:1px solid #ffffff10;
+    border-radius:17px;
+    transition:.2s;
+}
+
+.rule-section:hover{
+    border-color:#8b5cf655;
+    transform:translateY(-2px);
+}
+
+.rule-title{
+    color:#c9baff;
+    font-size:17px;
+    font-weight:900;
+    margin-bottom:18px;
+    letter-spacing:.4px;
+}
+
+.rule-line{
+    color:#c4c4cc;
+    font-size:14px;
+    line-height:1.8;
+    padding:3px 0;
+}
+
+.rule-warning{
+    margin-top:28px;
+    padding:20px;
+    border-radius:15px;
+    border:1px solid #8b5cf655;
+    background:#7c3aed16;
+    color:#ddd;
+    font-weight:800;
+    line-height:1.7;
+    text-align:center;
+}
+
+
+/* =========================
    CHANNELS
 ========================= */
 
@@ -641,6 +701,19 @@ header{
     .staff-grid{
         grid-template-columns:1fr;
     }
+
+    .rule-section{
+        padding:18px;
+    }
+
+    .rule-title{
+        font-size:15px;
+    }
+
+    .rule-line{
+        font-size:13px;
+        line-height:1.7;
+    }
 }
 
 </style>
@@ -699,6 +772,14 @@ header{
             data-page="staff"
             onclick="showPage('staff', this)">
             👑 Staff Team
+        </div>
+
+
+        <div
+            class="menu"
+            data-page="rules"
+            onclick="showPage('rules', this)">
+            📜 Rules
         </div>
 
     </aside>
@@ -1145,6 +1226,141 @@ header{
                     </div>
 
                 </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================
+             RULES
+        ========================= -->
+
+        <section id="rules" class="page">
+
+            <h1>
+                📜 Rules
+            </h1>
+
+            <p class="rules-intro">
+                Aurora серверийн дүрэм.
+            </p>
+
+
+            <div class="rules-container">
+
+
+                <div class="rule-section">
+
+                    <div class="rule-title">
+                        1 ДҮГЭЭР ЗҮЙЛ. ХАРИЛЦААНЫ СОЁЛ
+                    </div>
+
+                    <div class="rule-line">
+                        1.1 Бүх гишүүд хоорондоо хүндэтгэлтэй харилцана.
+                    </div>
+
+                    <div class="rule-line">
+                        1.2 Доромжлол, дээрэлхэлт, заналхийлэл хийхийг хатуу хориглоно.
+                    </div>
+
+                    <div class="rule-line">
+                        1.3 Toxic behavior болон hate speech-ийг хориглоно.
+                    </div>
+
+                    <div class="rule-line">
+                        1.4 Хараал хэлэхийг хориглоно.
+                    </div>
+
+                </div>
+
+
+
+                <div class="rule-section">
+
+                    <div class="rule-title">
+                        2 ДУГААР ЗҮЙЛ. ЭМХ ЖУРАМ
+                    </div>
+
+                    <div class="rule-line">
+                        2.1 Давтан мессеж (spam) хийхийг хориглоно.
+                    </div>
+
+                    <div class="rule-line">
+                        2.2 Emoji flood болон chat дүүргэх үйлдлийг хориглоно.
+                    </div>
+
+                    <div class="rule-line">
+                        2.3 Сувгийн эмх цэгцийг алдагдуулах үйлдэл хийхийг хориглоно.
+                    </div>
+
+                </div>
+
+
+
+                <div class="rule-section">
+
+                    <div class="rule-title">
+                        3 ДУГААР ЗҮЙЛ. КОНТЕНТ
+                    </div>
+
+                    <div class="rule-line">
+                        3.1 NSFW болон зохисгүй контентыг хориглоно.
+                    </div>
+
+                    <div class="rule-line">
+                        3.2 Бусдыг эвгүй байдалд оруулах аливаа материал нийтлэхийг хориглоно.
+                    </div>
+
+                    <div class="rule-line">
+                        3.3 Discord-ийн үндсэн дүрмийг дагаж мөрдөнө.
+                    </div>
+
+                </div>
+
+
+
+                <div class="rule-section">
+
+                    <div class="rule-title">
+                        4 ДҮГЭЭР ЗҮЙЛ. СУВГИЙН ДЭГ ЖУРАМ
+                    </div>
+
+                    <div class="rule-line">
+                        4.1 Сувгийн зориулалтыг дагаж ашиглана.
+                    </div>
+
+                    <div class="rule-line">
+                        4.2 Буруу сувагт бичихийг хориглоно.
+                    </div>
+
+                    <div class="rule-line">
+                        4.3 Эмх цэгцтэй байдлыг хадгална.
+                    </div>
+
+                </div>
+
+
+
+                <div class="rule-section">
+
+                    <div class="rule-title">
+                        5 ДУГААР ЗҮЙЛ. ШИЙТГЭЛ (WARNING SYSTEM)
+                    </div>
+
+                    <div class="rule-line">
+                        5.1 Дүрэм зөрчсөн тохиолдолд Warning олгоно.
+                    </div>
+
+                </div>
+
+
+
+                <div class="rule-warning">
+                    ✔ СЕРВЕРТ НЭВТЭРСЭН БҮХ ГИШҮҮН ЭНЭХҮҮ ДҮРМИЙГ УНШИЖ, ХҮЛЭЭН ЗӨВШӨӨРСӨНД ТООЦНО.
+                </div>
+
 
             </div>
 
