@@ -6,9 +6,10 @@
 
 <meta name="google-site-verification" content="OEQ8Gby0gKhWol8MHqvD6HyxLNls4kkXXks9B8JElNw" />
 
-<title>AURORA</title>
+<title>AURORA — Gaming Community</title>
 
 <style>
+
 *{
     box-sizing:border-box;
     margin:0;
@@ -16,11 +17,21 @@
     font-family:Arial,sans-serif;
 }
 
+html{
+    scroll-behavior:smooth;
+}
+
 body{
     background:#08080d;
     color:white;
     min-height:100vh;
+    overflow-x:hidden;
 }
+
+
+/* =========================
+   HEADER
+========================= */
 
 header{
     height:70px;
@@ -29,6 +40,8 @@ header{
     padding:0 25px;
     background:#0d0d14;
     border-bottom:1px solid #ffffff12;
+    position:relative;
+    z-index:10;
 }
 
 .logo{
@@ -41,16 +54,27 @@ header{
     color:#8b5cf6;
 }
 
+
+/* =========================
+   LAYOUT
+========================= */
+
 .container{
     display:flex;
     min-height:calc(100vh - 70px);
 }
+
+
+/* =========================
+   SIDEBAR
+========================= */
 
 .sidebar{
     width:250px;
     background:#0d0d14;
     border-right:1px solid #ffffff10;
     padding:25px 15px;
+    flex-shrink:0;
 }
 
 .category{
@@ -68,11 +92,13 @@ header{
     color:#999;
     cursor:pointer;
     transition:.2s;
+    user-select:none;
 }
 
 .menu:hover{
     background:#ffffff08;
     color:white;
+    transform:translateX(2px);
 }
 
 .menu.active{
@@ -80,13 +106,21 @@ header{
     color:#b58cff;
 }
 
+
+/* =========================
+   CONTENT
+========================= */
+
 .content{
     flex:1;
-    padding:45px;
+    padding:0;
+    min-width:0;
 }
 
 .page{
     display:none;
+    min-height:calc(100vh - 70px);
+    padding:45px;
 }
 
 .page.active{
@@ -102,6 +136,225 @@ header{
     color:#777;
     margin-bottom:35px;
 }
+
+
+/* =========================
+   HOME HERO
+========================= */
+
+.home{
+    position:relative;
+    overflow:hidden;
+    display:flex !important;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+}
+
+.home::before,
+.home::after{
+    content:"";
+    position:absolute;
+    border-radius:50%;
+    filter:blur(80px);
+    pointer-events:none;
+}
+
+.home::before{
+    width:420px;
+    height:420px;
+    background:#7c3aed55;
+    top:-150px;
+    left:-100px;
+    animation:floatGlow 7s ease-in-out infinite;
+}
+
+.home::after{
+    width:500px;
+    height:300px;
+    background:#06b6d455;
+    bottom:-120px;
+    right:-150px;
+    animation:floatGlow2 9s ease-in-out infinite;
+}
+
+.aurora{
+    position:absolute;
+    inset:0;
+    overflow:hidden;
+    pointer-events:none;
+}
+
+.aurora-line{
+    position:absolute;
+    width:160%;
+    height:220px;
+    left:-30%;
+    border-radius:50%;
+    filter:blur(30px);
+    opacity:.42;
+    transform:rotate(-8deg);
+    animation:auroraMove 8s ease-in-out infinite;
+}
+
+.aurora-line.one{
+    top:12%;
+    background:linear-gradient(
+        90deg,
+        transparent,
+        #7c3aed88,
+        #06b6d477,
+        #8b5cf688,
+        transparent
+    );
+}
+
+.aurora-line.two{
+    top:28%;
+    opacity:.24;
+    animation-delay:-3s;
+    background:linear-gradient(
+        90deg,
+        transparent,
+        #06b6d466,
+        #7c3aed88,
+        transparent
+    );
+}
+
+.aurora-line.three{
+    top:43%;
+    opacity:.18;
+    animation-delay:-6s;
+    background:linear-gradient(
+        90deg,
+        transparent,
+        #8b5cf688,
+        #06b6d455,
+        transparent
+    );
+}
+
+.home-content{
+    position:relative;
+    z-index:2;
+    max-width:850px;
+}
+
+.home-badge{
+    display:inline-block;
+    padding:8px 15px;
+    border:1px solid #ffffff18;
+    background:#ffffff08;
+    border-radius:999px;
+    color:#c7b5ff;
+    font-size:13px;
+    margin-bottom:22px;
+    backdrop-filter:blur(10px);
+}
+
+.home-title{
+    font-size:clamp(55px,10vw,110px);
+    font-weight:900;
+    letter-spacing:8px;
+    line-height:.95;
+    text-shadow:
+        0 0 25px #8b5cf655,
+        0 0 60px #7c3aed33;
+}
+
+.home-title span{
+    color:#8b5cf6;
+}
+
+.home-subtitle{
+    margin-top:25px;
+    color:#aaa;
+    font-size:20px;
+    line-height:1.6;
+}
+
+.home-buttons{
+    display:flex;
+    justify-content:center;
+    gap:12px;
+    flex-wrap:wrap;
+    margin-top:32px;
+}
+
+.home-btn{
+    border:none;
+    cursor:pointer;
+    padding:15px 25px;
+    border-radius:11px;
+    font-weight:bold;
+    font-size:14px;
+    text-decoration:none;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    transition:.2s;
+}
+
+.home-btn.primary{
+    background:#7c3aed;
+    color:white;
+}
+
+.home-btn.secondary{
+    background:#ffffff0b;
+    color:#ddd;
+    border:1px solid #ffffff15;
+}
+
+.home-btn:hover{
+    transform:translateY(-3px);
+}
+
+.home-btn.primary:hover{
+    box-shadow:0 0 35px #7c3aed66;
+}
+
+.home-btn.secondary:hover{
+    background:#ffffff14;
+}
+
+
+/* =========================
+   QUICK STATS
+========================= */
+
+.quick-stats{
+    display:grid;
+    grid-template-columns:repeat(2, minmax(150px,1fr));
+    gap:12px;
+    max-width:550px;
+    margin:35px auto 0;
+}
+
+.quick-stat{
+    padding:17px;
+    background:#ffffff08;
+    border:1px solid #ffffff10;
+    border-radius:14px;
+    backdrop-filter:blur(10px);
+}
+
+.quick-stat strong{
+    display:block;
+    font-size:22px;
+    margin-bottom:5px;
+}
+
+.quick-stat span{
+    color:#777;
+    font-size:13px;
+}
+
+
+/* =========================
+   CARDS
+========================= */
 
 .cards{
     display:grid;
@@ -135,6 +388,11 @@ header{
     color:#777;
     font-size:14px;
 }
+
+
+/* =========================
+   CHANNELS
+========================= */
 
 .channel{
     padding:18px;
@@ -170,6 +428,11 @@ header{
     padding:20px 0;
 }
 
+
+/* =========================
+   JOIN
+========================= */
+
 .join{
     display:inline-block;
     margin-top:35px;
@@ -187,32 +450,116 @@ header{
     box-shadow:0 0 30px #7c3aed66;
 }
 
+
+/* =========================
+   ANIMATIONS
+========================= */
+
+@keyframes auroraMove{
+
+    0%,100%{
+        transform:translateX(-5%) rotate(-8deg);
+    }
+
+    50%{
+        transform:translateX(5%) rotate(-3deg);
+    }
+}
+
+@keyframes floatGlow{
+
+    0%,100%{
+        transform:translate(0,0) scale(1);
+    }
+
+    50%{
+        transform:translate(60px,40px) scale(1.08);
+    }
+}
+
+@keyframes floatGlow2{
+
+    0%,100%{
+        transform:translate(0,0) scale(1);
+    }
+
+    50%{
+        transform:translate(-50px,-30px) scale(1.1);
+    }
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
 @media(max-width:650px){
 
+    header{
+        height:60px;
+        padding:0 16px;
+    }
+
+    .container{
+        min-height:calc(100vh - 60px);
+    }
+
     .sidebar{
-        width:190px;
+        width:175px;
+        padding:20px 10px;
     }
 
     .content{
+        min-width:0;
+    }
+
+    .page{
+        min-height:calc(100vh - 60px);
         padding:25px 15px;
     }
 
     .page h1{
         font-size:28px;
     }
+
+    .home-title{
+        font-size:55px;
+        letter-spacing:4px;
+    }
+
+    .home-subtitle{
+        font-size:16px;
+    }
+
+    .quick-stats{
+        grid-template-columns:1fr;
+    }
+
+    .home-btn{
+        width:100%;
+    }
 }
+
 </style>
 </head>
 
+
 <body>
 
+
 <header>
+
     <div class="logo">
         AUR<span>O</span>RA
     </div>
+
 </header>
 
+
 <div class="container">
+
+
+    <!-- SIDEBAR -->
 
     <aside class="sidebar">
 
@@ -220,11 +567,20 @@ header{
             AURORA
         </div>
 
+
         <div
             class="menu active"
+            onclick="showPage('home', this)">
+            🏠 Home
+        </div>
+
+
+        <div
+            class="menu"
             onclick="showPage('info', this)">
             🌌 Server Info
         </div>
+
 
         <div
             class="menu"
@@ -234,71 +590,202 @@ header{
 
     </aside>
 
+
+
+    <!-- CONTENT -->
+
     <main class="content">
 
-        <!-- SERVER INFO -->
 
-        <section id="info" class="page active">
+        <!-- =========================
+             HOME
+        ========================= -->
+
+        <section id="home" class="page active home">
+
+
+            <div class="aurora">
+
+                <div class="aurora-line one"></div>
+                <div class="aurora-line two"></div>
+                <div class="aurora-line three"></div>
+
+            </div>
+
+
+            <div class="home-content">
+
+                <div class="home-badge">
+                    ✦ WELCOME TO AURORA ✦
+                </div>
+
+
+                <div class="home-title">
+                    AUR<span>O</span>RA
+                </div>
+
+
+                <p class="home-subtitle">
+                    Your gaming community.
+                    <br>
+                    Play. Chat. Connect.
+                </p>
+
+
+                <div class="home-buttons">
+
+                    <a
+                        class="home-btn primary"
+                        href="https://discord.gg/CsWm5k4Ta"
+                        target="_blank">
+                        🚀 JOIN DISCORD
+                    </a>
+
+
+                    <button
+                        class="home-btn secondary"
+                        onclick="showPageById('game')">
+                        🎮 EXPLORE GAMES
+                    </button>
+
+                </div>
+
+
+                <div class="quick-stats">
+
+                    <div class="quick-stat">
+
+                        <strong id="homeMemberCount">
+                            Loading...
+                        </strong>
+
+                        <span>
+                            Community Members
+                        </span>
+
+                    </div>
+
+
+                    <div class="quick-stat">
+
+                        <strong id="homeOnlineCount">
+                            Loading...
+                        </strong>
+
+                        <span>
+                            Currently Online
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================
+             SERVER INFO
+        ========================= -->
+
+        <section id="info" class="page">
 
             <h1>
                 🌌 Server Info
             </h1>
 
+
             <p class="subtitle">
                 Welcome to the Aurora community.
             </p>
 
+
             <div class="cards">
 
+
                 <div class="card">
-                    <div class="icon">👥</div>
+
+                    <div class="icon">
+                        👥
+                    </div>
+
 
                     <h3 id="memberCount">
                         Loading...
                     </h3>
 
+
                     <p>
                         Members in Aurora.
                     </p>
+
                 </div>
 
+
+
                 <div class="card">
-                    <div class="icon">🟢</div>
+
+                    <div class="icon">
+                        🟢
+                    </div>
+
 
                     <h3 id="onlineCount">
                         Loading...
                     </h3>
 
+
                     <p>
                         Members currently online.
                     </p>
+
                 </div>
 
+
+
                 <div class="card">
-                    <div class="icon">🎮</div>
+
+                    <div class="icon">
+                        🎮
+                    </div>
+
 
                     <h3>
                         Gaming
                     </h3>
 
+
                     <p>
                         A community for gamers and gaming fans.
                     </p>
+
                 </div>
 
+
+
                 <div class="card">
-                    <div class="icon">⚡</div>
+
+                    <div class="icon">
+                        ⚡
+                    </div>
+
 
                     <h3>
                         Events
                     </h3>
 
+
                     <p>
                         Community events, competitions and giveaways.
                     </p>
+
                 </div>
 
+
             </div>
+
 
             <a
                 class="join"
@@ -310,7 +797,10 @@ header{
         </section>
 
 
-        <!-- GAME CHAT -->
+
+        <!-- =========================
+             GAME CHAT
+        ========================= -->
 
         <section id="game" class="page">
 
@@ -318,9 +808,11 @@ header{
                 🎮 Game Chat
             </h1>
 
+
             <p class="subtitle">
                 Gaming channels inside Aurora.
             </p>
+
 
             <div id="gameChannels">
 
@@ -332,12 +824,15 @@ header{
 
         </section>
 
+
     </main>
 
 </div>
 
 
+
 <script>
+
 
 /* =========================
    PAGE SWITCH
@@ -346,24 +841,91 @@ header{
 function showPage(pageId, element){
 
     document.querySelectorAll(".page").forEach(function(page){
+
         page.classList.remove("active");
+
     });
+
 
     const selectedPage =
         document.getElementById(pageId);
 
+
     if(selectedPage){
+
         selectedPage.classList.add("active");
+
     }
+
 
     document.querySelectorAll(".menu").forEach(function(menu){
+
         menu.classList.remove("active");
+
     });
 
+
     if(element){
+
         element.classList.add("active");
+
     }
+
 }
+
+
+
+function showPageById(pageId){
+
+    const selectedPage =
+        document.getElementById(pageId);
+
+
+    if(!selectedPage){
+
+        return;
+
+    }
+
+
+    document.querySelectorAll(".page").forEach(function(page){
+
+        page.classList.remove("active");
+
+    });
+
+
+    selectedPage.classList.add("active");
+
+
+    document.querySelectorAll(".menu").forEach(function(menu){
+
+        menu.classList.remove("active");
+
+    });
+
+
+    const menus =
+        document.querySelectorAll(".menu");
+
+
+    menus.forEach(function(menu){
+
+        if(
+            menu.getAttribute("onclick") &&
+            menu.getAttribute("onclick").includes(
+                "game"
+            )
+        ){
+
+            menu.classList.add("active");
+
+        }
+
+    });
+
+}
+
 
 
 /* =========================
@@ -375,17 +937,29 @@ async function loadDiscordData(){
     const gameContainer =
         document.getElementById("gameChannels");
 
+
     const memberElement =
         document.getElementById("memberCount");
+
 
     const onlineElement =
         document.getElementById("onlineCount");
 
+
+    const homeMemberElement =
+        document.getElementById("homeMemberCount");
+
+
+    const homeOnlineElement =
+        document.getElementById("homeOnlineCount");
+
+
     try{
+
 
         const response =
             await fetch("/api/channels", {
-                cache: "no-store"
+                cache:"no-store"
             });
 
 
@@ -394,6 +968,7 @@ async function loadDiscordData(){
             throw new Error(
                 "API returned " + response.status
             );
+
         }
 
 
@@ -401,11 +976,18 @@ async function loadDiscordData(){
             await response.json();
 
 
+
+        /* =========================
+           MEMBER COUNT
+        ========================= */
+
         const memberCount =
             response.headers.get("X-Member-Count");
 
+
         const onlineCount =
             response.headers.get("X-Online-Count");
+
 
 
         if(memberCount !== null){
@@ -413,54 +995,102 @@ async function loadDiscordData(){
             const parsedMembers =
                 Number(memberCount);
 
-            memberElement.textContent =
+
+            const memberText =
                 Number.isFinite(parsedMembers)
-                    ? parsedMembers.toLocaleString() + " Members"
+                    ? parsedMembers.toLocaleString()
                     : "Unavailable";
+
+
+            memberElement.textContent =
+                memberText + " Members";
+
+
+            homeMemberElement.textContent =
+                memberText;
 
         }else{
 
             memberElement.textContent =
                 "Unavailable";
+
+
+            homeMemberElement.textContent =
+                "Unavailable";
+
         }
 
+
+
+        /* =========================
+           ONLINE COUNT
+        ========================= */
 
         if(onlineCount !== null){
 
             const parsedOnline =
                 Number(onlineCount);
 
-            onlineElement.textContent =
+
+            const onlineText =
                 Number.isFinite(parsedOnline)
-                    ? parsedOnline.toLocaleString() + " Online"
+                    ? parsedOnline.toLocaleString()
                     : "Unavailable";
+
+
+            onlineElement.textContent =
+                onlineText + " Online";
+
+
+            homeOnlineElement.textContent =
+                onlineText;
 
         }else{
 
             onlineElement.textContent =
                 "Unavailable";
+
+
+            homeOnlineElement.textContent =
+                "Unavailable";
+
         }
 
+
+
+        /* =========================
+           CHANNEL DATA CHECK
+        ========================= */
 
         if(!Array.isArray(channels)){
 
             throw new Error(
                 "Discord channels response is not an array"
             );
+
         }
 
+
+
+        /* =========================
+           FIND GAME CATEGORY
+        ========================= */
 
         const gameCategory =
             channels.find(function(channel){
 
                 return (
+
                     channel.type === 4 &&
+
                     String(channel.name)
                         .trim()
                         .toLowerCase() === "game"
+
                 );
 
             });
+
 
 
         if(!gameCategory){
@@ -472,31 +1102,44 @@ async function loadDiscordData(){
             `;
 
             return;
+
         }
 
+
+
+        /* =========================
+           FIND GAME CHANNELS
+        ========================= */
 
         const gameChannels =
             channels.filter(function(channel){
 
                 return (
+
                     String(channel.parent_id) ===
                     String(gameCategory.id)
+
                 );
 
             });
 
 
-        gameChannels.sort(function(a, b){
+
+        gameChannels.sort(function(a,b){
 
             return (
+
                 (a.position || 0) -
                 (b.position || 0)
+
             );
 
         });
 
 
+
         gameContainer.innerHTML = "";
+
 
 
         if(gameChannels.length === 0){
@@ -508,8 +1151,14 @@ async function loadDiscordData(){
             `;
 
             return;
+
         }
 
+
+
+        /* =========================
+           DISPLAY GAME CHANNELS
+        ========================= */
 
         gameChannels.forEach(function(channel){
 
@@ -522,13 +1171,16 @@ async function loadDiscordData(){
 
 
             div.innerHTML = `
+
                 <h3>
                     🎮 #${escapeHTML(channel.name)}
                 </h3>
 
+
                 <p>
                     Aurora gaming channel
                 </p>
+
             `;
 
 
@@ -550,17 +1202,31 @@ async function loadDiscordData(){
         memberElement.textContent =
             "Unavailable";
 
+
         onlineElement.textContent =
             "Unavailable";
 
 
+        homeMemberElement.textContent =
+            "Unavailable";
+
+
+        homeOnlineElement.textContent =
+            "Unavailable";
+
+
         gameContainer.innerHTML = `
+
             <p class="error">
                 ⚠️ Failed to load Discord channels.
             </p>
+
         `;
+
     }
+
 }
+
 
 
 /* =========================
@@ -572,11 +1238,15 @@ function escapeHTML(text){
     const div =
         document.createElement("div");
 
+
     div.textContent =
         String(text);
 
+
     return div.innerHTML;
+
 }
+
 
 
 /* =========================
@@ -589,6 +1259,5 @@ loadDiscordData();
 
 </body>
 </html>
-
 
 
