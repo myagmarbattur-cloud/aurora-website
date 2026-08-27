@@ -21,45 +21,125 @@ html{
     scroll-behavior:smooth;
 }
 
+:root{
+    --bg:#08080d;
+    --panel:#0d0d14;
+    --card:#101017;
+    --purple:#7c3aed;
+    --purple-light:#b58cff;
+    --cyan:#06b6d4;
+    --text:#ffffff;
+    --muted:#777;
+}
+
 body{
-    background:#08080d;
-    color:white;
+    background:var(--bg);
+    color:var(--text);
     min-height:100vh;
     overflow-x:hidden;
 }
+
+
+/* =========================
+   CURSOR GLOW
+========================= */
+
+#cursorGlow{
+    position:fixed;
+    width:260px;
+    height:260px;
+    border-radius:50%;
+    pointer-events:none;
+    z-index:1;
+    opacity:.22;
+    background:
+        radial-gradient(
+            circle,
+            #8b5cf6 0%,
+            #7c3aed33 35%,
+            transparent 70%
+        );
+    transform:translate(-50%,-50%);
+    filter:blur(10px);
+}
+
+
+/* =========================
+   PARTICLES
+========================= */
+
+#particles{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    overflow:hidden;
+    z-index:0;
+}
+
+.particle{
+    position:absolute;
+    width:2px;
+    height:2px;
+    border-radius:50%;
+    background:#ffffff;
+    opacity:.35;
+    animation:particleFloat linear infinite;
+}
+
+
+/* =========================
+   HEADER
+========================= */
 
 header{
     height:70px;
     display:flex;
     align-items:center;
     padding:0 25px;
-    background:#0d0d14;
+    background:#0d0d14cc;
+    backdrop-filter:blur(18px);
     border-bottom:1px solid #ffffff12;
     position:relative;
-    z-index:20;
+    z-index:30;
 }
 
 .logo{
     font-size:24px;
     font-weight:900;
     letter-spacing:3px;
+    text-shadow:0 0 20px #7c3aed33;
 }
 
 .logo span{
     color:#8b5cf6;
 }
 
+
+/* =========================
+   LAYOUT
+========================= */
+
 .container{
     display:flex;
     min-height:calc(100vh - 70px);
+    position:relative;
+    z-index:2;
 }
+
+
+/* =========================
+   SIDEBAR
+========================= */
 
 .sidebar{
     width:250px;
-    background:#0d0d14;
+    background:#0d0d14dc;
+    backdrop-filter:blur(18px);
     border-right:1px solid #ffffff10;
     padding:25px 15px;
     flex-shrink:0;
+    position:relative;
+    z-index:20;
 }
 
 .category{
@@ -71,40 +151,81 @@ header{
 }
 
 .menu{
+    position:relative;
     padding:13px 14px;
     margin:5px 0;
-    border-radius:9px;
+    border-radius:10px;
     color:#999;
     cursor:pointer;
-    transition:.2s;
+    transition:
+        transform .25s ease,
+        color .25s ease,
+        background .25s ease,
+        box-shadow .25s ease;
     user-select:none;
+    overflow:hidden;
+}
+
+.menu::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(
+        90deg,
+        transparent,
+        #8b5cf622,
+        transparent
+    );
+    transform:translateX(-100%);
+    transition:.4s ease;
+}
+
+.menu:hover::before{
+    transform:translateX(100%);
 }
 
 .menu:hover{
     background:#ffffff08;
     color:white;
-    transform:translateX(2px);
+    transform:translateX(4px);
 }
 
 .menu.active{
-    background:#7c3aed22;
-    color:#b58cff;
+    background:
+        linear-gradient(
+            90deg,
+            #7c3aed2b,
+            #7c3aed12
+        );
+    color:#c9baff;
+    box-shadow:
+        inset 3px 0 0 #8b5cf6,
+        0 0 25px #7c3aed12;
 }
+
+
+/* =========================
+   CONTENT
+========================= */
 
 .content{
     flex:1;
     min-width:0;
     padding:0;
+    position:relative;
 }
 
 .page{
     display:none;
     min-height:calc(100vh - 70px);
     padding:45px;
+    opacity:0;
+    transform:translateY(12px);
 }
 
 .page.active{
     display:block;
+    animation:pageEnter .45s ease forwards;
 }
 
 .page h1{
@@ -125,7 +246,6 @@ header{
 .home{
     position:relative;
     overflow:hidden;
-    display:none;
     align-items:center;
     justify-content:center;
     text-align:center;
@@ -138,26 +258,26 @@ header{
 .home::before{
     content:"";
     position:absolute;
-    width:480px;
-    height:480px;
-    left:-160px;
-    top:-170px;
+    width:500px;
+    height:500px;
+    left:-180px;
+    top:-190px;
     border-radius:50%;
     background:#7c3aed55;
-    filter:blur(100px);
+    filter:blur(105px);
     animation:floatGlow 8s ease-in-out infinite;
 }
 
 .home::after{
     content:"";
     position:absolute;
-    width:520px;
-    height:340px;
-    right:-180px;
-    bottom:-150px;
+    width:550px;
+    height:360px;
+    right:-200px;
+    bottom:-170px;
     border-radius:50%;
     background:#06b6d455;
-    filter:blur(100px);
+    filter:blur(105px);
     animation:floatGlow2 10s ease-in-out infinite;
 }
 
@@ -170,18 +290,18 @@ header{
 
 .aurora-line{
     position:absolute;
-    width:170%;
-    height:210px;
-    left:-35%;
+    width:175%;
+    height:220px;
+    left:-37%;
     border-radius:50%;
-    filter:blur(35px);
-    opacity:.4;
+    filter:blur(36px);
     transform:rotate(-8deg);
     animation:auroraMove 9s ease-in-out infinite;
 }
 
 .aurora-line.one{
-    top:12%;
+    top:10%;
+    opacity:.42;
     background:linear-gradient(
         90deg,
         transparent,
@@ -193,8 +313,8 @@ header{
 }
 
 .aurora-line.two{
-    top:31%;
-    opacity:.24;
+    top:30%;
+    opacity:.25;
     animation-delay:-3s;
     background:linear-gradient(
         90deg,
@@ -234,7 +354,8 @@ header{
     background:#ffffff08;
     color:#c9baff;
     font-size:13px;
-    backdrop-filter:blur(10px);
+    backdrop-filter:blur(12px);
+    box-shadow:0 0 25px #7c3aed10;
 }
 
 .home-title{
@@ -245,6 +366,7 @@ header{
     text-shadow:
         0 0 25px #8b5cf655,
         0 0 60px #7c3aed33;
+    animation:titlePulse 4s ease-in-out infinite;
 }
 
 .home-title span{
@@ -268,22 +390,49 @@ header{
 }
 
 .home-btn{
+    position:relative;
+    overflow:hidden;
     border:none;
     cursor:pointer;
     padding:15px 25px;
-    border-radius:11px;
+    border-radius:12px;
     font-weight:bold;
     font-size:14px;
     text-decoration:none;
     display:inline-flex;
     align-items:center;
     justify-content:center;
-    transition:.2s;
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease,
+        background .25s ease;
+}
+
+.home-btn::after{
+    content:"";
+    position:absolute;
+    top:0;
+    left:-120%;
+    width:80%;
+    height:100%;
+    transform:skewX(-20deg);
+    background:linear-gradient(
+        90deg,
+        transparent,
+        #ffffff22,
+        transparent
+    );
+    transition:.55s ease;
+}
+
+.home-btn:hover::after{
+    left:140%;
 }
 
 .home-btn.primary{
     background:#7c3aed;
     color:white;
+    box-shadow:0 8px 25px #7c3aed22;
 }
 
 .home-btn.secondary{
@@ -293,15 +442,17 @@ header{
 }
 
 .home-btn:hover{
-    transform:translateY(-3px);
+    transform:translateY(-4px) scale(1.02);
 }
 
 .home-btn.primary:hover{
-    box-shadow:0 0 35px #7c3aed66;
+    box-shadow:
+        0 12px 35px #7c3aed44,
+        0 0 25px #7c3aed22;
 }
 
 .home-btn.secondary:hover{
-    background:#ffffff14;
+    background:#ffffff13;
 }
 
 .quick-stats{
@@ -316,8 +467,15 @@ header{
     padding:18px;
     background:#ffffff08;
     border:1px solid #ffffff10;
-    border-radius:14px;
-    backdrop-filter:blur(10px);
+    border-radius:15px;
+    backdrop-filter:blur(12px);
+    transition:.25s ease;
+}
+
+.quick-stat:hover{
+    transform:translateY(-4px);
+    border-color:#8b5cf644;
+    box-shadow:0 10px 30px #00000033;
 }
 
 .quick-stat strong{
@@ -344,15 +502,24 @@ header{
 
 .card{
     padding:25px;
-    background:#101017;
+    background:
+        linear-gradient(
+            145deg,
+            #14141d,
+            #101017
+        );
     border:1px solid #ffffff10;
-    border-radius:16px;
-    transition:.2s;
+    border-radius:17px;
+    transition:
+        transform .25s ease,
+        border-color .25s ease,
+        box-shadow .25s ease;
 }
 
 .card:hover{
-    transform:translateY(-4px);
+    transform:translateY(-6px);
     border-color:#8b5cf655;
+    box-shadow:0 15px 40px #00000044;
 }
 
 .icon{
@@ -419,7 +586,10 @@ header{
     border:1px solid #ffffff10;
     border-radius:18px;
     overflow:hidden;
-    transition:.25s;
+    transition:
+        transform .25s ease,
+        border-color .25s ease,
+        box-shadow .25s ease;
 }
 
 .staff-card::before{
@@ -432,17 +602,17 @@ header{
     border-radius:50%;
     background:#7c3aed44;
     filter:blur(45px);
-    transition:.25s;
+    transition:.35s ease;
 }
 
 .staff-card:hover{
-    transform:translateY(-5px);
+    transform:translateY(-6px) scale(1.01);
     border-color:#8b5cf666;
     box-shadow:0 15px 40px #00000055;
 }
 
 .staff-card:hover::before{
-    transform:scale(1.3);
+    transform:scale(1.4);
 }
 
 .staff-avatar{
@@ -520,12 +690,16 @@ header{
         );
     border:1px solid #ffffff10;
     border-radius:17px;
-    transition:.2s;
+    transition:
+        transform .25s ease,
+        border-color .25s ease,
+        box-shadow .25s ease;
 }
 
 .rule-section:hover{
     border-color:#8b5cf655;
-    transform:translateY(-2px);
+    transform:translateY(-3px);
+    box-shadow:0 12px 30px #00000033;
 }
 
 .rule-title{
@@ -553,6 +727,7 @@ header{
     font-weight:800;
     line-height:1.7;
     text-align:center;
+    box-shadow:0 0 30px #7c3aed10;
 }
 
 
@@ -566,12 +741,13 @@ header{
     background:#101017;
     border:1px solid #ffffff10;
     border-radius:13px;
-    transition:.2s;
+    transition:.25s ease;
 }
 
 .channel:hover{
     transform:translateX(5px);
     border-color:#8b5cf655;
+    box-shadow:0 10px 30px #00000033;
 }
 
 .channel h3{
@@ -608,12 +784,14 @@ header{
     text-decoration:none;
     border-radius:10px;
     font-weight:bold;
-    transition:.2s;
+    transition:.25s ease;
 }
 
 .join:hover{
-    transform:translateY(-3px);
-    box-shadow:0 0 30px #7c3aed66;
+    transform:translateY(-4px);
+    box-shadow:
+        0 12px 35px #7c3aed44,
+        0 0 25px #7c3aed22;
 }
 
 
@@ -621,7 +799,20 @@ header{
    ANIMATIONS
 ========================= */
 
+@keyframes pageEnter{
+    from{
+        opacity:0;
+        transform:translateY(12px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
 @keyframes auroraMove{
+
     0%,100%{
         transform:translateX(-5%) rotate(-8deg);
     }
@@ -632,6 +823,7 @@ header{
 }
 
 @keyframes floatGlow{
+
     0%,100%{
         transform:translate(0,0) scale(1);
     }
@@ -642,12 +834,35 @@ header{
 }
 
 @keyframes floatGlow2{
+
     0%,100%{
         transform:translate(0,0) scale(1);
     }
 
     50%{
         transform:translate(-50px,-30px) scale(1.1);
+    }
+}
+
+@keyframes titlePulse{
+
+    0%,100%{
+        filter:brightness(1);
+    }
+
+    50%{
+        filter:brightness(1.15);
+    }
+}
+
+@keyframes particleFloat{
+
+    from{
+        transform:translateY(105vh);
+    }
+
+    to{
+        transform:translateY(-10vh);
     }
 }
 
@@ -722,6 +937,10 @@ header{
 
 <body>
 
+<div id="cursorGlow"></div>
+<div id="particles"></div>
+
+
 <header>
 
     <div class="logo">
@@ -789,9 +1008,7 @@ header{
     <main class="content">
 
 
-        <!-- =========================
-             HOME
-        ========================= -->
+        <!-- HOME -->
 
         <section id="home" class="page active home">
 
@@ -837,7 +1054,7 @@ header{
                     <button
                         class="home-btn secondary"
                         type="button"
-                        onclick="showPage('game', document.querySelector('[data-page=game]'))">
+                        onclick="openGamePage()">
                         🎮 EXPLORE GAMES
                     </button>
 
@@ -879,9 +1096,7 @@ header{
 
 
 
-        <!-- =========================
-             SERVER INFO
-        ========================= -->
+        <!-- SERVER INFO -->
 
         <section id="info" class="page">
 
@@ -894,7 +1109,6 @@ header{
             </p>
 
             <div class="cards">
-
 
                 <div class="card">
 
@@ -963,7 +1177,6 @@ header{
 
                 </div>
 
-
             </div>
 
 
@@ -979,9 +1192,7 @@ header{
 
 
 
-        <!-- =========================
-             GAME CHAT
-        ========================= -->
+        <!-- GAME CHAT -->
 
         <section id="game" class="page">
 
@@ -1005,9 +1216,7 @@ header{
 
 
 
-        <!-- =========================
-             STAFF TEAM
-        ========================= -->
+        <!-- STAFF TEAM -->
 
         <section id="staff" class="page">
 
@@ -1019,8 +1228,6 @@ header{
                 Meet the people helping Aurora grow.
             </p>
 
-
-            <!-- OWNER -->
 
             <div class="staff-section">
 
@@ -1069,8 +1276,6 @@ header{
 
 
 
-            <!-- DEVELOPER -->
-
             <div class="staff-section">
 
                 <div class="staff-role">
@@ -1100,8 +1305,6 @@ header{
             </div>
 
 
-
-            <!-- ADMIN -->
 
             <div class="staff-section">
 
@@ -1167,8 +1370,6 @@ header{
 
 
 
-            <!-- STAFF -->
-
             <div class="staff-section">
 
                 <div class="staff-role">
@@ -1198,8 +1399,6 @@ header{
             </div>
 
 
-
-            <!-- MODERATOR -->
 
             <div class="staff-section">
 
@@ -1233,9 +1432,7 @@ header{
 
 
 
-        <!-- =========================
-             RULES
-        ========================= -->
+        <!-- RULES -->
 
         <section id="rules" class="page">
 
@@ -1276,7 +1473,6 @@ header{
                 </div>
 
 
-
                 <div class="rule-section">
 
                     <div class="rule-title">
@@ -1296,7 +1492,6 @@ header{
                     </div>
 
                 </div>
-
 
 
                 <div class="rule-section">
@@ -1320,7 +1515,6 @@ header{
                 </div>
 
 
-
                 <div class="rule-section">
 
                     <div class="rule-title">
@@ -1342,7 +1536,6 @@ header{
                 </div>
 
 
-
                 <div class="rule-section">
 
                     <div class="rule-title">
@@ -1354,7 +1547,6 @@ header{
                     </div>
 
                 </div>
-
 
 
                 <div class="rule-warning">
@@ -1373,6 +1565,55 @@ header{
 
 
 <script>
+
+/* =========================
+   CURSOR GLOW
+========================= */
+
+const cursorGlow =
+    document.getElementById("cursorGlow");
+
+document.addEventListener("mousemove", function(event){
+
+    cursorGlow.style.left =
+        event.clientX + "px";
+
+    cursorGlow.style.top =
+        event.clientY + "px";
+
+});
+
+
+/* =========================
+   PARTICLES
+========================= */
+
+const particles =
+    document.getElementById("particles");
+
+for(let i = 0; i < 35; i++){
+
+    const particle =
+        document.createElement("div");
+
+    particle.className =
+        "particle";
+
+    particle.style.left =
+        Math.random() * 100 + "%";
+
+    particle.style.animationDuration =
+        (7 + Math.random() * 12) + "s";
+
+    particle.style.animationDelay =
+        (-Math.random() * 15) + "s";
+
+    particle.style.opacity =
+        (0.12 + Math.random() * 0.35).toString();
+
+    particles.appendChild(particle);
+}
+
 
 /* =========================
    PAGE SWITCH
@@ -1416,6 +1657,23 @@ function showPage(pageId, element){
 
 
 /* =========================
+   OPEN GAME PAGE
+========================= */
+
+function openGamePage(){
+
+    const gameMenu =
+        document.querySelector('[data-page="game"]');
+
+    showPage(
+        "game",
+        gameMenu
+    );
+
+}
+
+
+/* =========================
    LOAD DISCORD DATA
 ========================= */
 
@@ -1444,15 +1702,19 @@ async function loadDiscordData(){
     try{
 
         const response =
-            await fetch("/api/channels", {
-                cache:"no-store"
-            });
+            await fetch(
+                "/api/channels",
+                {
+                    cache:"no-store"
+                }
+            );
 
 
         if(!response.ok){
 
             throw new Error(
-                "API returned " + response.status
+                "API returned " +
+                response.status
             );
 
         }
@@ -1467,11 +1729,15 @@ async function loadDiscordData(){
         ========================= */
 
         const memberHeader =
-            response.headers.get("X-Member-Count");
+            response.headers.get(
+                "X-Member-Count"
+            );
 
 
         const onlineHeader =
-            response.headers.get("X-Online-Count");
+            response.headers.get(
+                "X-Online-Count"
+            );
 
 
         const parsedMembers =
@@ -1537,7 +1803,7 @@ async function loadDiscordData(){
 
 
         /* =========================
-           CHANNEL DATA CHECK
+           CHANNEL DATA
         ========================= */
 
         if(!Array.isArray(channels)){
@@ -1550,17 +1816,20 @@ async function loadDiscordData(){
 
 
         /* =========================
-           FIND GAME CATEGORY
+           GAME CATEGORY
         ========================= */
 
         const gameCategory =
             channels.find(function(channel){
 
                 return (
+
                     channel.type === 4 &&
+
                     String(channel.name)
                         .trim()
                         .toLowerCase() === "game"
+
                 );
 
             });
@@ -1580,15 +1849,17 @@ async function loadDiscordData(){
 
 
         /* =========================
-           FIND GAME CHANNELS
+           GAME CHANNELS
         ========================= */
 
         const gameChannels =
             channels.filter(function(channel){
 
                 return (
+
                     String(channel.parent_id) ===
                     String(gameCategory.id)
+
                 );
 
             });
@@ -1597,14 +1868,17 @@ async function loadDiscordData(){
         gameChannels.sort(function(a,b){
 
             return (
+
                 (a.position || 0) -
                 (b.position || 0)
+
             );
 
         });
 
 
-        gameContainer.innerHTML = "";
+        gameContainer.innerHTML =
+            "";
 
 
         if(gameChannels.length === 0){
@@ -1621,7 +1895,7 @@ async function loadDiscordData(){
 
 
         /* =========================
-           DISPLAY CHANNELS
+           DISPLAY GAME CHANNELS
         ========================= */
 
         gameChannels.forEach(function(channel){
